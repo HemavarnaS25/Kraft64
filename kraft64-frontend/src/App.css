@@ -127,8 +127,6 @@ section {
   font-size: 3.5rem;
   font-weight: 700;
   color: #00f9ff;
-  text-shadow: 0 0 5px #00f9ff, 0 0 10px #00f9ff, 0 0 20px #00f9ff;
-
   white-space: nowrap;
   overflow: hidden;
 }
@@ -204,18 +202,6 @@ section {
   font-size: 1.2rem;
   margin-top: 5px;
 }
-/* --- Typing Text --- */
-.typewriter-text {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 3.8rem;
-  font-weight: 800;
-  color: #00f9ff;
-  text-shadow: 0 0 10px #00f9ff, 0 0 20px #00f9ff, 0 0 40px #00f9ff;
-  border-right: 3px solid #00f9ff;
-  white-space: nowrap;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
 
 /* --- Background Star Animation --- */
 .stars, .stars2, .stars3 {
@@ -260,7 +246,7 @@ section {
   background: rgba(0, 0, 0, 0.3);
   margin-top: 50px;
   transition: all 0.4s ease;
-  box-shadow: 0 0 15px #00f9ff, 0 0 30px #00f9ff;
+  box-shadow: 0 0 15px #83b4b5, 0 0 30px #5e7191;
 }
 
 .scroll-down-btn:hover {
