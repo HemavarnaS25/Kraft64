@@ -18,17 +18,18 @@ section {
   background: rgba(5, 5, 30, 0.8);
   backdrop-filter: blur(12px);
   padding: 10px 30px;
-  margin: 20px auto;
-  width: 90%;
-  border-radius: 20px;
+  margin: 0 auto; 
+  width: 100%;   
+  border-radius: 0px; /* Remove rounding if you want a sharp bar */
   transition: all 0.4s ease;
   box-shadow: 0px 8px 24px rgba(0, 255, 255, 0.2);
   position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  left: 0;
+  transform: none; /* No need to center manually */
   z-index: 1000;
 }
+
 
 .navbar .navbar-brand {
   color: #00f9ff;
@@ -90,6 +91,7 @@ section {
 /* --- Home Section --- */
 .home-section {
   height: 100vh;
+  margin-top:30px;
   background: linear-gradient(135deg, #2a0565, #010003);
   background-attachment: fixed;
   display: flex;
@@ -160,7 +162,7 @@ section {
   60% { transform: translateY(-8px); }
 }
 
-/* --- Gallery/Carousel inside Home --- */
+/* --- Gallery/Carousel inside Home -----------------:) */
 .home-gallery {
   margin-top: 50px;
 }
@@ -203,7 +205,7 @@ section {
   margin-top: 5px;
 }
 
-/* --- Background Star Animation --- */
+/* --- Background Star Animation -------------------:) */
 .stars, .stars2, .stars3 {
   position: absolute;
   width: 200%;
@@ -235,7 +237,7 @@ section {
   to { transform: translate(-500px, 500px); }
 }
 
-/* --- Scroll Down Button Fancy --- */
+/* --- Scroll Down Button Fancy -------------:)*/
 .scroll-down-btn {
   display: inline-block;
   padding: 15px;
@@ -255,7 +257,7 @@ section {
   transform: scale(1.2) rotate(10deg);
 }
 
-/* --- About Section --- */
+/* --- About Section ---------------:)*/
 .about-section {
   background: linear-gradient(135deg, #2a0565, #010003);
   color: #fff;
@@ -273,7 +275,7 @@ section {
 
 
 
-/* --- Contact Section --- */
+/* --- Contact Section ---------------:) */
 .contact-section {
   background: linear-gradient(135deg, #2a0565, #010003);
   color: #fff;
@@ -320,7 +322,7 @@ section {
   background: linear-gradient(135deg, #0abde3, #00f9ff);
   transform: scale(1.05);
 }
-/* Gallery Section */
+/*------------------ Gallery Section-----------------:) */
 .gallery-section {
   padding: 80px 0;
   background: linear-gradient(135deg, #2a0565, #010003);
@@ -334,7 +336,7 @@ section {
   color:#fff;
 }
 
-/* Gallery Cards */
+/* ----------------------Gallery Cards------------:) */
 .gallery-card {
   overflow: hidden;
   border-radius: 20px;
@@ -363,7 +365,7 @@ section {
 .gallery-card:hover .card-body {
   background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
 }
-/* --- Footer --- */
+/* --- Footer --- :)*/
 footer {
   background: #1a0033;
   color: #ccc;
@@ -390,7 +392,7 @@ footer .map {
   overflow: hidden;
 }
 
-/* --- Animations --- */
+/* --- Animations ---:) */
 @keyframes slideInUp {
   from { transform: translateY(100px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }

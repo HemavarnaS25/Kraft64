@@ -8,30 +8,24 @@ const Home = () => {
   return (
     <section id="home" className="home-section">
       <div className="container text-center home-content">
-
-        {/* Heading with Typewriter effect */}
         <h1 id="typed">
           <Typewriter
             words={['Welcome to Kraft64!']}
             loop={1}
-            cursor={true} // ✨ Cursor is back (blinking |)
+            cursor={true} 
             typeSpeed={80}
             deleteSpeed={50}
             delaySpeed={2000}
           />
         </h1>
-
-        {/* Lead Paragraph */}
         <motion.p 
           className="lead"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          Celebrating the Timeless Beauty of Tamil 64 Arts 🌸
+          Celebrating the Timeless Beauty of Tamil 64 Arts 
         </motion.p>
-
-        {/* Slideshow Cards under heading */}
         <motion.div 
           className="home-gallery"
           initial={{ opacity: 0, y: 50 }}
@@ -68,8 +62,6 @@ const Home = () => {
             </Carousel.Item>
           </Carousel>
         </motion.div>
-
-        {/* Scroll Down */}
         <motion.a 
           href="#about" 
           className="scroll-down-btn"
