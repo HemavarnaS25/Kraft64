@@ -22,7 +22,7 @@ const Login = () => {
       if (res.ok) {
         // Optional: store user in localStorage
         localStorage.setItem('user', JSON.stringify(data.user));
-        navigate('/student-dashboard'); // or wherever you want to go
+        navigate('/dashboard'); // or wherever you want to go
       }
     } catch (err) {
       console.error(err);

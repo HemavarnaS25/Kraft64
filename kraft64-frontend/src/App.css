@@ -534,3 +534,144 @@ footer .map {
     padding: 2rem;
   }
 }
+
+/*------------Dashboard-----------*/
+.dashboard-content {
+  padding: 2rem;
+  color: #fff;
+  background-color: #0f172a;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.profile-section {
+  margin-bottom: 3rem;
+}
+
+.section-heading {
+  font-size: 1.8rem;
+  color: #22c55e;
+  margin-bottom: 1.5rem;
+}
+
+.profile-card {
+  background-color: #1e293b;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.25);
+  max-width: 800px;
+  margin: auto;
+}
+
+.avatar-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.avatar-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #22c55e;
+}
+
+.upload-btn {
+  margin-top: 0.8rem;
+  padding: 0.5rem 1.2rem;
+  background-color: #22c55e;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.upload-btn:hover {
+  background-color: #16a34a;
+}
+
+.upload-info {
+  font-size: 0.75rem;
+  color: #a1a1aa;
+  margin-top: 0.4rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.form-grid input,
+.form-grid textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #334155;
+  color: #fff;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.form-grid textarea {
+  grid-column: span 2;
+  height: 100px;
+  resize: none;
+}
+
+.save-btn {
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #334155;
+  color: #94a3b8;
+  border: none;
+  border-radius: 6px;
+  cursor: not-allowed;
+  font-weight: bold;
+}
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #0f172a;
+}
+
+.dashboard-sidebar {
+  width: 220px;
+  background-color: #1e293b;
+  padding: 1.5rem;
+  border-right: 1px solid #334155;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-sidebar h2 {
+  font-size: 1.2rem;
+  color: #22c55e;
+  margin-bottom: 1rem;
+}
+
+.dashboard-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dashboard-sidebar li {
+  padding: 0.5rem 0;
+  cursor: pointer;
+  color: #cbd5e1;
+  transition: 0.2s;
+}
+
+.dashboard-sidebar li:hover,
+.dashboard-sidebar li.active {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+
+

@@ -6,6 +6,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import Dashboard from './components/Dashboard'; // ✅ Add this
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
         />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} /> {/* ✅ Dashboard Route */}
       </Routes>
     </Router>
   );
