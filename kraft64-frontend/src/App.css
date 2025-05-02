@@ -94,6 +94,7 @@ section {
   margin-top:30px;
   /* background: linear-gradient(135deg, #2a0565, #010003); */
   background-image:url('https://i.pinimg.com/originals/71/f0/e4/71f0e4afe56252a9032e94de5e94d18e.jpg');
+  background-repeat: cover,no-repeat;
   background-attachment: fixed;
   display: flex;
   justify-content: center;
