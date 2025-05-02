@@ -32,7 +32,7 @@ const Signup = () => {
       <div className="auth-right">
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit}>
-          <input type="text" name="fullName" placeholder="Full Name" required onChange={handleChange} />
+          <input type="text" name="username" placeholder="Username" required onChange={handleChange} />
           <input type="email" name="email" placeholder="Email" required onChange={handleChange} />
           <input type="password" name="password" placeholder="Password" required onChange={handleChange} />
           <button type="submit">Create Account</button>

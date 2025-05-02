@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import Home from './components/Home';
 import Gallery from './components/Gallery';
@@ -6,13 +6,17 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard'; // ✅ Add this
+import Dashboard from './components/Dashboard';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-const App = () => {
+// Wrapper to use useLocation inside Router
+const AppContent = () => {
+  const location = useLocation();
+  const hideNavbar = location.pathname === '/dashboard';
+
   return (
-    <Router>
-      <NavigationBar />
+    <>
+      {!hideNavbar && <NavigationBar />}
       <Routes>
         <Route
           path="/"
@@ -27,8 +31,16 @@ const App = () => {
         />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} /> {/* ✅ Dashboard Route */}
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 };

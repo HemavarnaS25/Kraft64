@@ -1,14 +1,13 @@
+// Dashboard.jsx
 import React, { useEffect, useState } from 'react';
 import ChangePassword from './ChangePassword';
 
+
 const Dashboard = () => {
-  const [user, setUser] = useState({ name: '', email: '', id: '' });
+  const [user, setUser] = useState({ name: '', email: '', id: '', bio: '' });
   const [selectedSection, setSelectedSection] = useState('User');
-  const [avatar, setAvatar] = useState(null);
-  const [previewAvatar, setPreviewAvatar] = useState(localStorage.getItem('avatar') || '');
   const [bio, setBio] = useState('');
   const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
 
   useEffect(() => {
@@ -16,48 +15,28 @@ const Dashboard = () => {
     if (storedUser) {
       setUser(storedUser);
       setFullName(storedUser.name || '');
-      setEmail(storedUser.email || '');
       setBio(storedUser.bio || '');
-      setPreviewAvatar(localStorage.getItem('avatar') || storedUser.avatar || '');
     }
   }, []);
-  
-
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    setAvatar(file);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64Image = reader.result;
-      setPreviewAvatar(base64Image);
-      localStorage.setItem('avatar', base64Image);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/update-profile', {
+      const response = await fetch(`http://localhost:5000/api/auth/update-profile/${user.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user.id,
-          fullName,
-          email,
-          bio,
-          avatar: previewAvatar,
-        }),
+        body: JSON.stringify({ fullName, bio }),
       });
-  
+
       const data = await response.json();
       if (response.ok) {
         alert('Profile updated successfully!');
-        localStorage.setItem('user', JSON.stringify(data.user));
-        if (data.user.avatar) {
-          localStorage.setItem('avatar', data.user.avatar);
-        }
+        const updatedUser = {
+          ...user,
+          name: data.user.fullName,
+          bio: data.user.bio,
+        };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setUser(updatedUser);
       } else {
         alert(data.msg || 'Update failed.');
       }
@@ -66,10 +45,6 @@ const Dashboard = () => {
       alert('Error updating profile');
     }
   };
-  
-
-  const handleChangePasswordClick = () => setIsChangePasswordModalOpen(true);
-  const handleCloseModal = () => setIsChangePasswordModalOpen(false);
 
   return (
     <div className="dashboard-container">
@@ -79,6 +54,10 @@ const Dashboard = () => {
           <li onClick={() => setSelectedSection('User')} className={selectedSection === 'User' ? 'active' : ''}>User</li>
           <li onClick={() => setSelectedSection('Explore')} className={selectedSection === 'Explore' ? 'active' : ''}>Explore</li>
           <li onClick={() => setSelectedSection('Train')} className={selectedSection === 'Train' ? 'active' : ''}>Train</li>
+          <li onClick={() => {
+            localStorage.removeItem('user');
+            window.location.href = '/';
+          }} className="logout">Logout</li>
         </ul>
       </aside>
 
@@ -87,46 +66,11 @@ const Dashboard = () => {
           <section className="profile-section">
             <h2 className="section-heading">General Information</h2>
             <div className="profile-card">
-              <div className="avatar-upload">
-                <img
-                  src={previewAvatar || '/avatar-placeholder.png'}
-                  alt="Avatar"
-                  className="avatar-img"
-                />
-                <label htmlFor="avatarInput" className="upload-btn">Upload Avatar</label>
-                <input
-                  type="file"
-                  id="avatarInput"
-                  accept="image/*"
-                  style={{ display: 'none' }}
-                  onChange={handleAvatarChange}
-                />
-                <small className="upload-info">Max size 2MB. Formats: JPG, PNG.</small>
-              </div>
               <div className="form-grid">
-                <input
-                  type="text"
-                  placeholder="Username"
-                  value={user.name}
-                  disabled
-                />
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
-                <textarea
-                  placeholder="Biography"
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                />
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <input type="text" value={user.name} disabled placeholder="Username" />
+                <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Full Name" />
+                <textarea value={bio} onChange={(e) => setBio(e.target.value)} placeholder="Biography" />
+                <input type="email" value={user.email} disabled placeholder="Email" />
               </div>
               <button className="save-btn" onClick={handleSaveChanges}>Save Changes</button>
             </div>
@@ -140,7 +84,7 @@ const Dashboard = () => {
         <div className="modal-overlay">
           <div className="modal-content">
             <ChangePassword userId={user.id} />
-            <button onClick={handleCloseModal}>Close</button>
+            <button onClick={() => setIsChangePasswordModalOpen(false)}>Close</button>
           </div>
         </div>
       )}

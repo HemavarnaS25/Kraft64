@@ -7,12 +7,14 @@ export const signup = async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ msg: "User already exists" });
 
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ fullName, email, password: hashedPassword });
     await newUser.save();
 
-    res.status(201).json({ msg: "User created successfully", user: { id: newUser._id, fullName: newUser.fullName, email: newUser.email } });
+    res.status(201).json({
+      msg: "User created successfully",
+      user: { id: newUser._id, fullName: newUser.fullName, email: newUser.email }
+    });
   } catch (err) {
     res.status(500).json({ msg: err.message });
   }
@@ -33,12 +35,38 @@ export const login = async (req, res) => {
         id: user._id,
         name: user.fullName,
         email: user.email,
-        avatar: user.avatar || '', // Optional
         bio: user.bio || ''
       }
     });
-    
+   
   } catch (err) {
     res.status(500).json({ msg: err.message });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { fullName, email, bio } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { fullName, email, bio },
+      { new: true }
+    );
+
+    if (!updatedUser) return res.status(404).json({ msg: 'User not found' });
+
+    res.json({
+      msg: 'Profile updated',
+      user: {
+        id: updatedUser._id,
+        name: updatedUser.fullName,
+        email: updatedUser.email,
+        bio: updatedUser.bio
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Error updating profile' });
   }
 };
