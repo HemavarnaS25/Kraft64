@@ -22,7 +22,7 @@ section {
   width: 100%;   
   border-radius: 0px; /* Remove rounding if you want a sharp bar */
   transition: all 0.4s ease;
-  box-shadow: 0px 8px 24px rgba(0, 255, 255, 0.2);
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 0;
   left: 0;
@@ -32,7 +32,7 @@ section {
 
 
 .navbar .navbar-brand {
-  color: #00f9ff;
+  color: #000000;
   font-weight: 800;
   font-size: 1.6rem;
   letter-spacing: 1.5px;
@@ -53,7 +53,7 @@ section {
   content: "";
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #00f9ff, #0abde3);
+  background: linear-gradient(90deg, #12073df3, #240498);
   position: absolute;
   left: 0;
   bottom: -4px;
@@ -66,7 +66,7 @@ section {
 }
 
 .navbar .nav-link:hover {
-  color: #00f9ff !important;
+  color: #0011ff !important;
   transform: scale(1.05);
 }
 
@@ -92,13 +92,14 @@ section {
 .home-section {
   height: 100vh;
   margin-top:30px;
-  background: linear-gradient(135deg, #2a0565, #010003);
+  /* background: linear-gradient(135deg, #2a0565, #010003); */
+  background-image:url('https://i.pinimg.com/originals/71/f0/e4/71f0e4afe56252a9032e94de5e94d18e.jpg');
   background-attachment: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: #fff;
+  color: #000000;
   position: relative;
   overflow: hidden;
 }
@@ -128,7 +129,8 @@ section {
 #typed {
   font-size: 3.5rem;
   font-weight: 700;
-  color: #00f9ff;
+  margin-top:-100px;
+  color: #000000;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -147,13 +149,12 @@ section {
 
 @keyframes glow {
   from {
-    filter: drop-shadow(0 0 5px #789393) brightness(1.2);
+    filter: drop-shadow(0 0 5px #c5caca) brightness(1.2);
   }
   to {
-    filter: drop-shadow(0 0 15px #f8fafa) brightness(1.5);
+    filter: drop-shadow(0 0 15px #b2b8b8) brightness(1.5);
   }
 }
-
 
 /* --- Bounce Animation --- */
 @keyframes bounce {
@@ -161,50 +162,6 @@ section {
   40% { transform: translateY(-15px); }
   60% { transform: translateY(-8px); }
 }
-
-/* --- Gallery/Carousel inside Home -----------------:) */
-.home-gallery {
-  margin-top: 50px;
-}
-
-.card-carousel {
-  position: relative;
-  overflow: hidden;
-  border-radius: 20px;
-  box-shadow: 0px 0px 20px rgba(0,249,255,0.5);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.card-carousel:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 0px 30px rgba(0,249,255,0.8);
-}
-
-.gallery-img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-}
-
-.overlay {
-  position: absolute;
-  bottom: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-  color: #fff;
-  width: 100%;
-  padding: 20px;
-  transition: background 0.4s ease;
-}
-
-.overlay h5 {
-  font-size: 1.8rem;
-}
-
-.overlay p {
-  font-size: 1.2rem;
-  margin-top: 5px;
-}
-
 /* --- Background Star Animation -------------------:) */
 .stars, .stars2, .stars3 {
   position: absolute;
@@ -241,19 +198,19 @@ section {
 .scroll-down-btn {
   display: inline-block;
   padding: 15px;
-  border: 2px solid #f5f6f6;
+  border: 2px solid #bdbdbd;
   border-radius: 50%;
   font-size: 2rem;
-  color: #00f9ff;
-  background: rgba(0, 0, 0, 0.3);
+  color: #fef6f6;
+  background: rgba(43, 42, 42, 0.3);
   margin-top: 50px;
   transition: all 0.4s ease;
-  box-shadow: 0 0 15px #83b4b5, 0 0 30px #5e7191;
+  box-shadow: 0 0 15px #f8f7f7, 0 0 30px #d8d3d3;
 }
 
 .scroll-down-btn:hover {
-  background: #f1f4f4;
-  color: #010003;
+  background: #ffffff;
+  color: #ffffff;
   transform: scale(1.2) rotate(10deg);
 }
 
@@ -435,8 +392,8 @@ footer .map {
 
 .auth-left {
   flex: 1;
-  background: url('https://cdn.wallpapersafari.com/44/91/mNo8h0.jpg') center center/cover no-repeat;
-  color: white;
+  background: url('https://muselot.in/cdn/shop/articles/gond_painting.jpg?v=1676631899')  center/cover no-repeat;
+  color: rgb(240, 246, 255);
   padding: 3rem;
   display: flex;
   flex-direction: column;

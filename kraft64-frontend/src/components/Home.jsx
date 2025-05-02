@@ -26,7 +26,7 @@ const Home = () => {
         >
           Celebrating the Timeless Beauty of Tamil 64 Arts 
         </motion.p>
-        <motion.div 
+        {/* <motion.div 
           className="home-gallery"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -61,7 +61,7 @@ const Home = () => {
               </div>
             </Carousel.Item>
           </Carousel>
-        </motion.div>
+        </motion.div> */}
         <motion.a 
           href="#about" 
           className="scroll-down-btn"
@@ -70,9 +70,9 @@ const Home = () => {
           transition={{ duration: 1, delay: 2 }}
         >
           <img 
-            src="https://img.icons8.com/?size=100&id=WQiX8VTC7LIa&format=png&color=00f9ff" 
+            src="https://img.icons8.com/?size=100&id=WQiX8VTC7LIa&format=png&color=000000" 
             alt="Scroll Down Icon" 
-            style={{ width: '40px', height: '40px' }} 
+            style={{ width: '45px', height: '40px' }} 
           />
         </motion.a>
 
