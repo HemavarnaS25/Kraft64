@@ -15,16 +15,12 @@ const Dashboard = () => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
       setUser(storedUser);
-      setFullName(storedUser.name);
-      setEmail(storedUser.email);
+      setFullName(storedUser.name || '');
+      setEmail(storedUser.email || '');
+      setBio(storedUser.bio || '');
+      setPreviewAvatar(localStorage.getItem('avatar') || storedUser.avatar || '');
     }
   }, []);
-  const formattedUser = {
-    id: user._id,  // <--- This is key
-    name: user.name,
-    email: user.email,
-  };
-  localStorage.setItem('user', JSON.stringify(formattedUser));
   
 
   const handleAvatarChange = (e) => {
@@ -43,29 +39,25 @@ const Dashboard = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const storedUser = JSON.parse(localStorage.getItem('user'));
-      const userId = storedUser?.id;
-  
-      if (!userId) return alert('User ID is missing. Please log in again.');
-  
-      const response = await fetch(`http://localhost:5000/api/auth/update-profile/${userId}`, {
+      const response = await fetch('http://localhost:5000/api/auth/update-profile', {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          userId: user.id,
           fullName,
           email,
           bio,
-          avatar: previewAvatar, // Base64 string
+          avatar: previewAvatar,
         }),
       });
   
       const data = await response.json();
       if (response.ok) {
         alert('Profile updated successfully!');
-        localStorage.setItem('user', JSON.stringify({ ...data.user, id: data.user._id }));
-        localStorage.setItem('avatar', data.user.avatar);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        if (data.user.avatar) {
+          localStorage.setItem('avatar', data.user.avatar);
+        }
       } else {
         alert(data.msg || 'Update failed.');
       }
@@ -136,10 +128,7 @@ const Dashboard = () => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <button className="save-btn" onClick={handleSaveChanges}>
-  Save Changes
-</button>
-
+              <button className="save-btn" onClick={handleSaveChanges}>Save Changes</button>
             </div>
           </section>
         )}
