@@ -1,33 +1,45 @@
 import express from 'express';
-import bcrypt from 'bcrypt';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 import User from '../models/User.js';
 import { signup, login } from '../controllers/authController.js';
 
 const router = express.Router();
 
-// Signup and Login Routes
+// Set up Multer for avatar uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const dir = './uploads/avatars';
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage });
+
+// Signup/Login
 router.post('/signup', signup);
 router.post('/login', login);
 
-// Change Password Route (with current password verification)
-router.put('/change-password', async (req, res) => {
-  const { userId, currentPassword, newPassword } = req.body;
-
+// Update Profile with Avatar Upload
+router.put('/update-profile/:id', upload.single('avatar'), async (req, res) => {
   try {
-    const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ msg: 'User not found' });
+    const { fullName, email, bio } = req.body;
+    const updateData = { fullName, email, bio };
 
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
-    if (!isMatch) return res.status(401).json({ msg: 'Incorrect current password' });
+    if (req.file) {
+      updateData.avatar = `/uploads/avatars/${req.file.filename}`;
+    }
 
-    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-    user.password = hashedNewPassword;
-    await user.save();
-
-    res.json({ msg: 'Password updated successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: 'Error updating password' });
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
+    res.json({ msg: 'Profile updated', user: updatedUser });
+  } catch (error) {
+    console.error('Profile update error:', error);
+    res.status(500).json({ msg: 'Error updating profile' });
   }
 });
 

@@ -550,7 +550,7 @@ footer .map {
 
 .section-heading {
   font-size: 1.8rem;
-  color: #22c55e;
+  color: #2256c5;
   margin-bottom: 1.5rem;
 }
 
@@ -558,7 +558,7 @@ footer .map {
   background-color: #1e293b;
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 0 12px rgba(34, 197, 94, 0.25);
+  box-shadow: 0 0 12px rgba(34, 48, 197, 0.25);
   max-width: 800px;
   margin: auto;
 }
@@ -576,14 +576,14 @@ footer .map {
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #22c55e;
+  border: 2px solid #3022c5;
 }
 
 .upload-btn {
   margin-top: 0.8rem;
   padding: 0.5rem 1.2rem;
-  background-color: #22c55e;
-  color: #000;
+  background-color: #3822c5;
+  color: #c8bdbd;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -592,7 +592,7 @@ footer .map {
 }
 
 .upload-btn:hover {
-  background-color: #16a34a;
+  background-color: #161ba3;
 }
 
 .upload-info {
@@ -651,7 +651,7 @@ footer .map {
 
 .dashboard-sidebar h2 {
   font-size: 1.2rem;
-  color: #22c55e;
+  color: #7f78e3;
   margin-bottom: 1rem;
 }
 
@@ -669,7 +669,7 @@ footer .map {
 
 .dashboard-sidebar li:hover,
 .dashboard-sidebar li.active {
-  color: #22c55e;
+  color: #7188d2;
   font-weight: bold;
 }
 
