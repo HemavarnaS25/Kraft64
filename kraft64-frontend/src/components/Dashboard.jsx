@@ -19,6 +19,13 @@ const Dashboard = () => {
       setEmail(storedUser.email);
     }
   }, []);
+  const formattedUser = {
+    id: user._id,  // <--- This is key
+    name: user.name,
+    email: user.email,
+  };
+  localStorage.setItem('user', JSON.stringify(formattedUser));
+  
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
@@ -36,22 +43,29 @@ const Dashboard = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/update-profile', {
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+      const userId = storedUser?.id;
+  
+      if (!userId) return alert('User ID is missing. Please log in again.');
+  
+      const response = await fetch(`http://localhost:5000/api/auth/update-profile/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: user.id,
-          fullName: user.name,
-          email: user.email,
-          avatar: avatar, // base64 or URL
+          fullName,
+          email,
+          bio,
+          avatar: previewAvatar, // Base64 string
         }),
       });
   
       const data = await response.json();
       if (response.ok) {
         alert('Profile updated successfully!');
+        localStorage.setItem('user', JSON.stringify({ ...data.user, id: data.user._id }));
+        localStorage.setItem('avatar', data.user.avatar);
       } else {
         alert(data.msg || 'Update failed.');
       }
