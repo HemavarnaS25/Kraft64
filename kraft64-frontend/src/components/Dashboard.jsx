@@ -1,7 +1,8 @@
-// Dashboard.jsx
 import React, { useEffect, useState } from 'react';
 import ChangePassword from './ChangePassword';
-
+import ExploreAayarKalai from './Explore/ExploreAayarKalai';
+import ExploreTamilTraditionalThings from './Explore/ExploreTamilTraditionalThings';
+import TrainerPage from './TrainerPage'; // import your trainer section
 
 const Dashboard = () => {
   const [user, setUser] = useState({ name: '', email: '', id: '', bio: '' });
@@ -51,13 +52,33 @@ const Dashboard = () => {
       <aside className="dashboard-sidebar">
         <h2>Menu</h2>
         <ul>
-          <li onClick={() => setSelectedSection('User')} className={selectedSection === 'User' ? 'active' : ''}>User</li>
-          <li onClick={() => setSelectedSection('Explore')} className={selectedSection === 'Explore' ? 'active' : ''}>Explore</li>
-          <li onClick={() => setSelectedSection('Train')} className={selectedSection === 'Train' ? 'active' : ''}>Train</li>
-          <li onClick={() => {
-            localStorage.removeItem('user');
-            window.location.href = '/';
-          }} className="logout">Logout</li>
+          <li
+            onClick={() => setSelectedSection('User')}
+            className={selectedSection === 'User' ? 'active' : ''}
+          >
+            User
+          </li>
+          <li
+            onClick={() => setSelectedSection('Explore')}
+            className={selectedSection === 'Explore' ? 'active' : ''}
+          >
+            Explore
+          </li>
+          <li
+            onClick={() => setSelectedSection('Train')}
+            className={selectedSection === 'Train' ? 'active' : ''}
+          >
+            Train
+          </li>
+          <li
+            onClick={() => {
+              localStorage.removeItem('user');
+              window.location.href = '/';
+            }}
+            className="logout"
+          >
+            Logout
+          </li>
         </ul>
       </aside>
 
@@ -68,16 +89,38 @@ const Dashboard = () => {
             <div className="profile-card">
               <div className="form-grid">
                 <input type="text" value={user.name} disabled placeholder="Username" />
-                <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Full Name" />
-                <textarea value={bio} onChange={(e) => setBio(e.target.value)} placeholder="Biography" />
+                <input
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Full Name"
+                />
+                <textarea
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  placeholder="Biography"
+                />
                 <input type="email" value={user.email} disabled placeholder="Email" />
               </div>
-              <button className="save-btn" onClick={handleSaveChanges}>Save Changes</button>
+              <button className="save-btn" onClick={handleSaveChanges}>
+                Save Changes
+              </button>
             </div>
           </section>
         )}
-        {selectedSection === 'Explore' && <p>Explore content coming soon...</p>}
-        {selectedSection === 'Train' && <p>Train content coming soon...</p>}
+
+        {selectedSection === 'Explore' && (
+          <div className="explore-section">
+            <ExploreAayarKalai />
+            <ExploreTamilTraditionalThings />
+          </div>
+        )}
+
+        {selectedSection === 'Train' && (
+          <div className="train-section">
+            <TrainerPage />
+          </div>
+        )}
       </main>
 
       {isChangePasswordModalOpen && (

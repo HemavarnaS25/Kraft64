@@ -1,8 +1,9 @@
+// Signup.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
-  const [formData, setFormData] = useState({ fullName: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ username: '', fullName: '', email: '', password: '' });
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -33,6 +34,7 @@ const Signup = () => {
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <input type="text" name="username" placeholder="Username" required onChange={handleChange} />
+          <input type="text" name="fullName" placeholder="Full Name" required onChange={handleChange} />
           <input type="email" name="email" placeholder="Email" required onChange={handleChange} />
           <input type="password" name="password" placeholder="Password" required onChange={handleChange} />
           <button type="submit">Create Account</button>
