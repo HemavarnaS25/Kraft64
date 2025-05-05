@@ -22,7 +22,7 @@ const Dashboard = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/update-profile/${user.id}`, {
+      const response = await fetch(`https://kraft64.onrender.com/api/auth/update-profile/${user.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fullName, bio }),
