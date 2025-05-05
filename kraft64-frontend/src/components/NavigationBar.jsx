@@ -4,8 +4,6 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 const NavigationBar = () => {
   const location = useLocation();
-
-  // Check if on the homepage to enable smooth scrolling
   const isHomePage = location.pathname === "/";
 
   return (

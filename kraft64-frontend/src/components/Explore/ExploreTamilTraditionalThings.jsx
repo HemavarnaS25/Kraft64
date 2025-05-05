@@ -1,7 +1,6 @@
-// src/components/Explore/ExploreTamilTraditionalThings.jsx
+
 import React, { useState } from 'react';
 
-// Example list of Tamil Traditional Things
 const traditionalThingsList = [
   {
     name: 'Kolam',
@@ -73,8 +72,6 @@ const ExploreTamilTraditionalThings = () => {
           </div>
         ))}
       </div>
-
-      {/* Modal to show selected traditional thing details */}
       {selectedThing && (
         <div className="modal-overlay">
           <div className="modal-content">

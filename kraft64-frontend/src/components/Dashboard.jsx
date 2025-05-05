@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ChangePassword from './ChangePassword';
 import ExploreAayarKalai from './Explore/ExploreAayarKalai';
 import ExploreTamilTraditionalThings from './Explore/ExploreTamilTraditionalThings';
-import TrainerPage from './TrainerPage'; // import your trainer section
+import TrainerPage from './TrainerPage'; 
 
 const Dashboard = () => {
   const [user, setUser] = useState({ name: '', email: '', id: '', bio: '' });

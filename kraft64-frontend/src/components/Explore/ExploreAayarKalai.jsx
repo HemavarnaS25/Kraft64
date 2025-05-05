@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-
-// Expanded Tamil arts data with additional information
 const aayarKalaiList = [
   {
   name: '1. எழுத்திலக்கணம் (அக்கரவிலக்கணம்) / Letter Grammar (Akara Vilakkam)',
@@ -295,8 +293,6 @@ const ExploreAayarKalai = () => {
           </div>
         ))}
       </div>
-
-      {/* Modal to show selected art details */}
       {selectedArt && (
         <div className="modal-overlay">
           <div className="modal-content">
