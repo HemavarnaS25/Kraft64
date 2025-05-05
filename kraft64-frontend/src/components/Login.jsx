@@ -12,21 +12,22 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch('https://kraft64.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
       alert(data.msg);
+
       if (res.ok) {
-        // Optional: store user in localStorage
         localStorage.setItem('user', JSON.stringify(data.user));
-        navigate('/dashboard'); // or wherever you want to go
+        navigate('/dashboard');
       }
     } catch (err) {
       console.error(err);
-      alert('Login failed');
+      alert('Login failed. Please try again later.');
     }
   };
 
@@ -36,8 +37,22 @@ const Login = () => {
       <div className="auth-right">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
-          <input type="email" name="email" placeholder="Email" required onChange={handleChange} />
-          <input type="password" name="password" placeholder="Password" required onChange={handleChange} />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            onChange={handleChange}
+            value={formData.email}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            onChange={handleChange}
+            value={formData.password}
+          />
           <button type="submit">Sign In</button>
           <p className="redirect-text">
             Don’t have an account? <Link to="/signup">Create one</Link>
