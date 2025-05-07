@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { Layout, Menu, Button, Input, Form, Modal, message, Tabs, Card, Avatar } from 'antd';
+import {
+  UserOutlined,
+  LogoutOutlined,
+  EditOutlined,
+  AppstoreOutlined,
+  TeamOutlined,
+  ProfileOutlined,
+} from '@ant-design/icons';
 import ChangePassword from './ChangePassword';
 import ExploreAayarKalai from './Explore/ExploreAayarKalai';
 import ExploreTamilTraditionalThings from './Explore/ExploreTamilTraditionalThings';
-import TrainerPage from './TrainerPage'; 
+import TrainerPage from './TrainerPage';
+import Profile from './Profile';
+
+const { Sider, Content } = Layout;
+const { TabPane } = Tabs;
 
 const Dashboard = () => {
-  const [user, setUser] = useState({ name: '', email: '', id: '', bio: '' });
-  const [selectedSection, setSelectedSection] = useState('User');
+  const [user, setUser] = useState({ name: '', email: '', id: '', bio: '', profilePic: '' });
+  const [selectedSection, setSelectedSection] = useState('Profile');
   const [bio, setBio] = useState('');
   const [fullName, setFullName] = useState('');
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
@@ -30,7 +43,7 @@ const Dashboard = () => {
 
       const data = await response.json();
       if (response.ok) {
-        alert('Profile updated successfully!');
+        message.success('Profile updated successfully!');
         const updatedUser = {
           ...user,
           name: data.user.fullName,
@@ -39,99 +52,93 @@ const Dashboard = () => {
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setUser(updatedUser);
       } else {
-        alert(data.msg || 'Update failed.');
+        message.error(data.msg || 'Update failed.');
       }
     } catch (error) {
       console.error('Frontend error:', error);
-      alert('Error updating profile');
+      message.error('Error updating profile');
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.href = '/';
+  };
+
   return (
-    <div className="dashboard-container">
-      <aside className="dashboard-sidebar">
-        <h2>Menu</h2>
-        <ul>
-          <li
-            onClick={() => setSelectedSection('User')}
-            className={selectedSection === 'User' ? 'active' : ''}
-          >
-            User
-          </li>
-          <li
-            onClick={() => setSelectedSection('Explore')}
-            className={selectedSection === 'Explore' ? 'active' : ''}
-          >
-            Explore
-          </li>
-          <li
-            onClick={() => setSelectedSection('Train')}
-            className={selectedSection === 'Train' ? 'active' : ''}
-          >
-            Train
-          </li>
-          <li
-            onClick={() => {
-              localStorage.removeItem('user');
-              window.location.href = '/';
-            }}
-            className="logout"
-          >
-            Logout
-          </li>
-        </ul>
-      </aside>
-
-      <main className="dashboard-content">
-        {selectedSection === 'User' && (
-          <section className="profile-section">
-            <h2 className="section-heading">General Information</h2>
-            <div className="profile-card">
-              <div className="form-grid">
-                <input type="text" value={user.name} disabled placeholder="Username" />
-                <input
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Full Name"
-                />
-                <textarea
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                  placeholder="Biography"
-                />
-                <input type="email" value={user.email} disabled placeholder="Email" />
-              </div>
-              <button className="save-btn" onClick={handleSaveChanges}>
-                Save Changes
-              </button>
-            </div>
-          </section>
-        )}
-
-        {selectedSection === 'Explore' && (
-          <div className="explore-section">
-            <ExploreAayarKalai />
-            <ExploreTamilTraditionalThings />
-          </div>
-        )}
-
-        {selectedSection === 'Train' && (
-          <div className="train-section">
-            <TrainerPage />
-          </div>
-        )}
-      </main>
-
-      {isChangePasswordModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <ChangePassword userId={user.id} />
-            <button onClick={() => setIsChangePasswordModalOpen(false)}>Close</button>
-          </div>
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider breakpoint="lg" collapsedWidth="0" style={{ background: '#fff' }}>
+        <div className="logo" style={{ textAlign: 'center', margin: '16px 0' }}>
+          <Avatar size={64} icon={<UserOutlined />} />
+          <div style={{ marginTop: 8 }}>{user.name}</div>
         </div>
-      )}
-    </div>
+        <Menu
+          mode="inline"
+          selectedKeys={[selectedSection]}
+          onClick={({ key }) => setSelectedSection(key)}
+          style={{ fontWeight: '500' }}
+        >
+          <Menu.Item key="Profile" icon={<ProfileOutlined />}>Profile</Menu.Item>
+          <Menu.Item key="Explore" icon={<AppstoreOutlined />}>Explore</Menu.Item>
+          <Menu.Item key="Train" icon={<TeamOutlined />}>Train</Menu.Item>
+          <Menu.Item key="Logout" icon={<LogoutOutlined />} onClick={handleLogout}>Logout</Menu.Item>
+        </Menu>
+      </Sider>
+
+      <Layout>
+        <Content style={{ margin: '24px 16px', padding: 24, background: '#f5f5f5' }}>
+          {selectedSection === 'User' && (
+            <Card title="Edit Profile" bordered={false} style={{ maxWidth: 800, margin: 'auto' }}>
+              <Form layout="vertical" onFinish={handleSaveChanges}>
+                <Form.Item label="Username">
+                  <Input value={user.name} disabled />
+                </Form.Item>
+                <Form.Item label="Full Name">
+                  <Input value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                </Form.Item>
+                <Form.Item label="Bio">
+                  <Input.TextArea rows={4} value={bio} onChange={(e) => setBio(e.target.value)} />
+                </Form.Item>
+                <Form.Item label="Email">
+                  <Input value={user.email} disabled />
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" htmlType="submit" block>Save Changes</Button>
+                </Form.Item>
+              </Form>
+            </Card>
+          )}
+
+          {selectedSection === 'Profile' && <Profile user={user} setUser={setUser} />}
+
+          {selectedSection === 'Explore' && (
+            <Tabs defaultActiveKey="1">
+              <TabPane tab="Aayar Kalai" key="1">
+                <ExploreAayarKalai />
+              </TabPane>
+              <TabPane tab="Tamil Traditional Things" key="2">
+                <ExploreTamilTraditionalThings />
+              </TabPane>
+            </Tabs>
+          )}
+
+          {selectedSection === 'Train' && (
+            <Card title="Trainers" bordered={false}>
+              <TrainerPage />
+            </Card>
+          )}
+        </Content>
+      </Layout>
+
+      <Modal
+        title="Change Password"
+        open={isChangePasswordModalOpen}
+        onCancel={() => setIsChangePasswordModalOpen(false)}
+        footer={null}
+      >
+        <ChangePassword userId={user.id} />
+      </Modal>
+    </Layout>
   );
 };
 

@@ -6,6 +6,19 @@ const router = express.Router();
 
 router.post('/signup', signup);
 router.post('/login', login);
+router.put('/update-socials/:id', async (req, res) => {
+  const { profilePic, linkedIn, xLink } = req.body;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { profilePic, linkedIn, xLink },
+      { new: true }
+    );
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ msg: 'Failed to update socials.' });
+  }
+});
 
 router.put('/update-profile/:id', async (req, res) => {
   try {

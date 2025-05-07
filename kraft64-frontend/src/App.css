@@ -612,6 +612,17 @@ footer .map {
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
+.timeline-chart {
+  margin-top: 2rem;
+  background: #1e293b;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+.profile-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid #334155;
+}
 
 .form-grid input,
 .form-grid textarea {
@@ -656,6 +667,7 @@ footer .map {
 /*----------Explore Aayarkalai----------:)*/
 
 .explore-aayar-kalai {
+  background: linear-gradient(135deg, #2a0565, #010003);
   padding: 80px 20px;
   min-height: 100vh;
   
@@ -801,6 +813,7 @@ footer .map {
 
 .explore-tamil-traditional-things {
   padding: 80px 20px;
+  background: linear-gradient(135deg, #2a0565, #010003);
   min-height: 100vh;
   color: white;
   text-align: center;
@@ -1110,4 +1123,108 @@ footer .map {
     transform: scale(1);
     opacity: 1;
   }
+}
+/*----------------------------Profile---------------------*/
+.profile-section {
+  
+  font-family: 'Outfit', sans-serif;
+  color: #2c1b0c;
+  padding: 2rem;
+  background: linear-gradient(135deg, #2a0565, #010003);
+}
+
+.section-heading {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #312b5b;
+  border-bottom: 2px solid rgba(43, 45, 91, 0.4);
+  padding-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.profile-card {
+  background: linear-gradient(135deg, #2a0565, #010003);
+  max-width: 700px;
+  margin: 0 auto;
+  background: #f9f9ff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease-in-out;
+  border: 1px solid #c3c4e8;
+}
+
+.profile-card img {
+  border: 3px solid #929ddc;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.profile-card img:hover {
+  transform: scale(1.05);
+}
+
+.profile-card input[type="file"] {
+  border: 1px solid #9298dc;
+  padding: 0.4rem;
+  border-radius: 6px;
+  background-color: #e9e9ff;
+  cursor: pointer;
+}
+
+.profile-card input[type="file"]::-webkit-file-upload-button {
+  background: linear-gradient(135deg, #2a0565, #010003);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.profile-card input[type="file"]::-webkit-file-upload-button:hover {
+  background: linear-gradient(135deg, #2a0565, #010003);
+}
+
+.profile-card p {
+  margin: 1rem 0;
+  font-size: 1rem;
+  color: #251b4b;
+}
+
+.timeline-chart {
+  margin-top: 2rem;
+  background: #f0ebfc;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #c6c1e1;
+}
+
+.profile-card input[type="text"],
+.profile-card input[type="url"],
+.profile-card input[placeholder*="URL"] {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  margin-top: 1rem;
+  font-size: 1rem;
+  border: 1px solid #8493c3;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #2a0565, #010003);
+  transition: border 0.3s ease;
+}
+
+.profile-card input[type="url"]:focus {
+  border: 1px solid #332d8b;
+  outline: none;
+}
+
+.profile-footer {
+  margin-top: 3rem;
+}
+
+.profile-footer img {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
