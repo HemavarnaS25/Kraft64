@@ -26,7 +26,7 @@ const TrainerDashboard = () => {
       setFullName(storedUser.name || '');
       setBio(storedUser.bio || '');
       fetchCourses(storedUser.id);
-      fetchStudents(storedUser.id); // Fetch students linked to the trainer
+      fetchStudents(storedUser.id);
     }
   }, []);
 
@@ -79,7 +79,7 @@ const TrainerDashboard = () => {
 
   const handleAddCourse = async (values) => {
     try {
-      const res = await fetch(`https://kraft64.onrender.com/api/courses/add`, {
+      const res = await fetch('https://kraft64.onrender.com/api/courses/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...values, trainerId: user.id }),
@@ -89,7 +89,8 @@ const TrainerDashboard = () => {
         message.success('Course added successfully!');
         setIsCourseModalOpen(false);
         courseForm.resetFields();
-        fetchCourses(user.id); // Refresh course list
+        // Optimistically update local course state
+        setCourses((prevCourses) => [...prevCourses, { ...values, trainerId: user.id }]);
       } else {
         message.error(data.msg || 'Failed to add course');
       }
@@ -130,7 +131,7 @@ const TrainerDashboard = () => {
             <Card title="Edit Profile" bordered={false} style={{ maxWidth: 800, margin: 'auto' }}>
               <Form layout="vertical" onFinish={handleSaveChanges}>
                 <Form.Item label="Username">
-                  <Input value={user.username} disabled />
+                  <Input value={user.username || user.email?.split('@')[0]} disabled />
                 </Form.Item>
                 <Form.Item label="Email">
                   <Input value={user.email} disabled />
@@ -168,7 +169,7 @@ const TrainerDashboard = () => {
               />
               <Modal
                 title="Add New Course"
-                visible={isCourseModalOpen}
+                open={isCourseModalOpen}
                 onCancel={() => setIsCourseModalOpen(false)}
                 footer={null}
               >
