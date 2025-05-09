@@ -35,8 +35,8 @@ const TrainerDashboard = () => {
       const res = await fetch(`https://kraft64.onrender.com/api/courses/trainer/${trainerId}`);
       const data = await res.json();
       if (res.ok) setCourses(data);
-    } catch (err) {
-      console.error("Error fetching courses:", err);
+    } catch (error) {
+      console.error('Error fetching courses:', error);
     }
   };
 
@@ -84,13 +84,16 @@ const TrainerDashboard = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...values, trainerId: user.id }),
       });
+
       const data = await res.json();
+
       if (res.ok) {
         message.success('Course added successfully!');
         setIsCourseModalOpen(false);
         courseForm.resetFields();
-        // Optimistically update local course state
-        setCourses((prevCourses) => [...prevCourses, { ...values, trainerId: user.id }]);
+
+        // Use the returned course with Mongo _id
+        setCourses((prevCourses) => [...prevCourses, data]);
       } else {
         message.error(data.msg || 'Failed to add course');
       }
