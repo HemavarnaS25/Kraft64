@@ -9,8 +9,14 @@ const userSchema = new mongoose.Schema({
   profilePic: { type: String, default: '' },
   linkedIn: { type: String, default: '' },
   xLink: { type: String, default: '' },
-  role: { type: String, enum: ['Student', 'Trainer'],} // Role stored in DB
-});
+  role: {
+    type: String,
+    enum: ['student', 'trainer'], // Only student and trainer allowed
+    required: true,
+    lowercase: true, // Automatically convert input to lowercase
+    trim: true
+  }
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 
