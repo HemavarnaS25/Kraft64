@@ -8,9 +8,9 @@ const userSchema = new mongoose.Schema({
   bio: { type: String, default: '' },
   profilePic: { type: String, default: '' },
   linkedIn: { type: String, default: '' },
-  xLink: { type: String, default: '' }
+  xLink: { type: String, default: '' },
+  role: { type: String, enum: ['Student', 'Trainer'],} // Role stored in DB
 });
-
 
 const User = mongoose.model('User', userSchema);
 

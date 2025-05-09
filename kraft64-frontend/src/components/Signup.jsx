@@ -8,6 +8,7 @@ const Signup = () => {
     fullName: '',
     email: '',
     password: '',
+    role: '', // Add role to form data
   });
 
   const navigate = useNavigate();
@@ -75,6 +76,17 @@ const Signup = () => {
             onChange={handleChange}
             value={formData.password}
           />
+          <select
+            name="role"
+            required
+            onChange={handleChange}
+            value={formData.role}
+            style={{ padding: '10px', marginBottom: '15px' }}
+          >
+            <option value="">Select Role</option>
+            <option value="student">Learner</option>
+            <option value="trainer">Trainer</option>
+          </select>
           <button type="submit">Create Account</button>
           <p className="redirect-text">
             Already have an account? <Link to="/login">Sign in</Link>

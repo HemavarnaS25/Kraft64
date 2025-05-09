@@ -1,3 +1,4 @@
+// Login.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -23,7 +24,12 @@ const Login = () => {
 
       if (res.ok) {
         localStorage.setItem('user', JSON.stringify(data.user));
-        navigate('/dashboard');
+
+        if (data.user.role === 'trainer') {
+          navigate('/trainer-dashboard');
+        } else {
+          navigate('/dashboard');
+        }
       }
     } catch (err) {
       console.error(err);
