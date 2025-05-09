@@ -17,13 +17,13 @@ export const signup = async (req, res) => {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user with the role or default to 'Student'
+    // Create new user with the role or default to 'student'
     const newUser = new User({
       username,
       fullName,
       email,
       password: hashedPassword,
-      role: role,  // Default to 'Student' if no role is provided
+      role: role || 'student',  // Default to 'student' if no role is provided
     });
 
     // Save new user to DB

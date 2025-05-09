@@ -3,10 +3,10 @@ import { Layout, Menu, Button, Input, Form, Modal, message, Tabs, Card, Avatar }
 import {
   UserOutlined,
   LogoutOutlined,
-  EditOutlined,
   AppstoreOutlined,
   TeamOutlined,
   ProfileOutlined,
+  EditOutlined,
 } from '@ant-design/icons';
 import ChangePassword from './ChangePassword';
 import ExploreAayarKalai from './Explore/ExploreAayarKalai';
@@ -79,6 +79,7 @@ const Dashboard = () => {
           style={{ fontWeight: '500' }}
         >
           <Menu.Item key="Profile" icon={<ProfileOutlined />}>Profile</Menu.Item>
+          <Menu.Item key="EditProfile" icon={<EditOutlined />}>Edit Profile</Menu.Item>
           <Menu.Item key="Explore" icon={<AppstoreOutlined />}>Explore</Menu.Item>
           <Menu.Item key="Train" icon={<TeamOutlined />}>Train</Menu.Item>
           <Menu.Item key="Logout" icon={<LogoutOutlined />} onClick={handleLogout}>Logout</Menu.Item>
@@ -87,7 +88,9 @@ const Dashboard = () => {
 
       <Layout>
         <Content style={{ margin: '24px 16px', padding: 24, background: '#f5f5f5' }}>
-          {selectedSection === 'User' && (
+          {selectedSection === 'Profile' && <Profile user={user} setUser={setUser} />}
+
+          {selectedSection === 'EditProfile' && (
             <Card title="Edit Profile" bordered={false} style={{ maxWidth: 800, margin: 'auto' }}>
               <Form layout="vertical" onFinish={handleSaveChanges}>
                 <Form.Item label="Username">
@@ -106,10 +109,11 @@ const Dashboard = () => {
                   <Button type="primary" htmlType="submit" block>Save Changes</Button>
                 </Form.Item>
               </Form>
+              <Button type="link" onClick={() => setIsChangePasswordModalOpen(true)}>
+                Change Password
+              </Button>
             </Card>
           )}
-
-          {selectedSection === 'Profile' && <Profile user={user} setUser={setUser} />}
 
           {selectedSection === 'Explore' && (
             <Tabs defaultActiveKey="1">
