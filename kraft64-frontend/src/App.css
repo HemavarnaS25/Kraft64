@@ -530,6 +530,39 @@ footer .map {
   }
 }
 
+.auth-right select {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 2px solid #2a0565;
+  outline: none;
+  background: #f5f5f5;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  color: #2a0565;
+}
+
+.auth-right select:focus {
+  border-color: #3b078a;
+  background-color: #fafafa;
+}
+.auth-right select:focus {
+  border-color: #3b078a;
+  background-color: #fafafa;
+}
+.auth-right option {
+  background-color: #fff;
+  color: #2a0565;
+  padding: 0.8rem;
+  font-size: 1rem;
+}
+.auth-right select:hover {
+  background-color: #fafafa;
+  border-color: #3b078a;
+}
+
+
 /*------------Dashboard-----------*/
 
 .dashboard-container {
@@ -1227,4 +1260,96 @@ footer .map {
 .profile-footer img {
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+/*-----------------------Trainer Dashboard---------------------*/
+/* General Layout Styling */
+.ant-layout {
+  background: #f0f2f5;
+}
+
+.ant-layout-sider {
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.ant-layout-sider .ant-menu {
+  border-right: none;
+}
+
+.ant-menu-item {
+  font-size: 16px;
+  padding: 16px;
+}
+
+.ant-menu-item-selected {
+  background-color: #e6f7ff !important;
+  color: #1890ff !important;
+  font-weight: 600;
+}
+
+/* Avatar and user name section */
+.ant-layout-sider > div:first-child {
+  padding: 16px;
+  background-color: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ant-layout-sider .ant-avatar {
+  background-color: #1890ff;
+}
+
+.ant-layout-sider div {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Content area */
+.ant-layout-content {
+  padding: 24px;
+  background-color: #f9f9f9;
+}
+
+/* Cards */
+.ant-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+}
+
+/* Form Styling */
+.ant-form-item-label label {
+  font-weight: 500;
+}
+
+.ant-input,
+.ant-select,
+.ant-input-number {
+  border-radius: 6px;
+}
+
+.ant-btn-primary {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  font-weight: 600;
+}
+
+/* Modal */
+.ant-modal-content {
+  border-radius: 12px;
+}
+
+/* Course List */
+.ant-list-item {
+  background-color: #fff;
+  padding: 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.ant-list-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Student List */
+.ant-list-item-meta {
+  align-items: center;
 }

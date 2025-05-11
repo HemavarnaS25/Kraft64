@@ -13,11 +13,11 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const AppContent = () => {
   const location = useLocation();
-  const hideNavbar = location.pathname === '/dashboard';
+  const showNavbar = location.pathname === '/'; // Show only on home page
 
   return (
     <>
-      {!hideNavbar && <NavigationBar />}
+      {showNavbar && <NavigationBar />}
       <Routes>
         <Route
           path="/"
@@ -38,6 +38,7 @@ const AppContent = () => {
     </>
   );
 };
+
 
 const App = () => (
   <Router>
