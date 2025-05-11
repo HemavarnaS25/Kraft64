@@ -73,6 +73,20 @@ router.post('/join/:courseId', async (req, res) => {
     res.status(500).json({ msg: 'Server error while joining the course.' });
   }
 });
+// @route   GET /api/courses/all
+// @desc    Get all courses with trainer details populated
+router.get('/all', async (req, res) => {
+  try {
+    const courses = await Course.find()
+      .populate('trainerId', 'name')  // Populate the trainer name (you can also add other fields if needed)
+      .sort({ createdAt: -1 });
+    res.json(courses);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    res.status(500).json({ msg: 'Server error while fetching courses.' });
+  }
+});
+
 
 
 export default router;
