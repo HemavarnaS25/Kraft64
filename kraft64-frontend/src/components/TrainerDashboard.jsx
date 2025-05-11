@@ -78,6 +78,7 @@ const TrainerDashboard = () => {
   };
 
   const handleAddCourse = async (values) => {
+    console.log('Form submitted:', values);
     try {
       const res = await fetch('https://kraft64.onrender.com/api/courses/add', {
         method: 'POST',
@@ -91,7 +92,6 @@ const TrainerDashboard = () => {
         message.success('Course added successfully!');
         setIsCourseModalOpen(false);
         courseForm.resetFields();
-
         setCourses((prevCourses) => [...prevCourses, data]);
       } else {
         message.error(data.msg || 'Failed to add course');
@@ -160,7 +160,6 @@ const TrainerDashboard = () => {
               <List
                 itemLayout="horizontal"
                 dataSource={courses}
-                rowKey={(item) => item._id}
                 renderItem={(item) => (
                   <List.Item>
                     <List.Item.Meta
@@ -175,8 +174,17 @@ const TrainerDashboard = () => {
                 open={isCourseModalOpen}
                 onCancel={() => setIsCourseModalOpen(false)}
                 footer={null}
+                forceRender
               >
-                <Form layout="vertical" form={courseForm} onFinish={handleAddCourse}>
+                <Form
+                  layout="vertical"
+                  form={courseForm}
+                  onFinish={handleAddCourse}
+                  onFinishFailed={(err) => {
+                    console.log('Form validation failed:', err);
+                    message.error('Please fill in all required fields.');
+                  }}
+                >
                   <Form.Item name="name" label="Course Name" rules={[{ required: true }]}>
                     <Input />
                   </Form.Item>
@@ -215,7 +223,6 @@ const TrainerDashboard = () => {
               <List
                 itemLayout="horizontal"
                 dataSource={students}
-                rowKey={(item) => item._id || item.email}
                 renderItem={(item) => (
                   <List.Item>
                     <List.Item.Meta
