@@ -33,7 +33,7 @@ router.post('/add', async (req, res) => {
 });
 
 // @route   GET /api/courses/trainer/:trainerId
-// @desc    Get all courses for a trainer
+// @desc    Get all courses for a specific trainer
 router.get('/trainer/:trainerId', async (req, res) => {
   try {
     const courses = await Course.find({ trainerId: req.params.trainerId }).sort({ createdAt: -1 });
@@ -41,6 +41,15 @@ router.get('/trainer/:trainerId', async (req, res) => {
   } catch (error) {
     console.error('Error in /trainer/:trainerId:', error);
     res.status(500).json({ msg: 'Server error while fetching courses.' });
+  }
+});
+router.get('/all', async (req, res) => {
+  try {
+    const courses = await Course.find().populate('trainerId', 'name email');
+    res.json(courses);
+  } catch (error) {
+    console.error('Error in /all:', error);
+    res.status(500).json({ msg: 'Server error while fetching all courses.' });
   }
 });
 

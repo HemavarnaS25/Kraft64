@@ -1,75 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, List, Avatar, Button, Modal } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+// components/TrainerPage.js
+import React, { useEffect, useState } from 'react';
+import { Card, List, Avatar, message } from 'antd';
+import { BookOutlined } from '@ant-design/icons';
 
 const TrainerPage = () => {
-  const [trainers, setTrainers] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedTrainer, setSelectedTrainer] = useState(null);
+  const [courses, setCourses] = useState([]);
 
-  // Sample data fetching
   useEffect(() => {
-    // Example API call to fetch trainers (replace with your actual API)
-    fetch('https://kraft64.onrender.com/api/trainers')
-      .then((response) => response.json())
-      .then((data) => setTrainers(data))
-      .catch((error) => console.error('Error fetching trainers:', error));
+    const fetchCourses = async () => {
+      try {
+        const res = await fetch('https://kraft64.onrender.com/api/courses/all');
+        const data = await res.json();
+        if (res.ok) setCourses(data);
+        else message.error(data.msg || 'Failed to fetch courses');
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+        message.error('Error fetching courses');
+      }
+    };
+
+    fetchCourses();
   }, []);
 
-  const handleTrainerClick = (trainer) => {
-    setSelectedTrainer(trainer);
-    setIsModalVisible(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalVisible(false);
-    setSelectedTrainer(null);
-  };
-
   return (
-    <div>
-      <Row gutter={16}>
-        {trainers.length === 0 ? (
-          <p>No trainers available</p>
-        ) : (
-          trainers.map((trainer) => (
-            <Col span={8} key={trainer.id}>
-              <Card
-                hoverable
-                cover={<img alt="trainer" src={trainer.imageUrl || 'default.jpg'} />}
-                onClick={() => handleTrainerClick(trainer)}
-              >
-                <Card.Meta
-                  avatar={<Avatar icon={<UserOutlined />} />}
-                  title={trainer.name}
-                  description={trainer.experience}
-                />
-              </Card>
-            </Col>
-          ))
-        )}
-      </Row>
-
-      <Modal
-        title={selectedTrainer?.name}
-        visible={isModalVisible}
-        onCancel={handleModalClose}
-        footer={[
-          <Button key="back" onClick={handleModalClose}>
-            Close
-          </Button>,
-        ]}
-      >
-        {selectedTrainer && (
-          <div>
-            <p><strong>Experience:</strong> {selectedTrainer.experience}</p>
-            <p><strong>Contact:</strong> {selectedTrainer.contact}</p>
-            <p><strong>Course Name:</strong> {selectedTrainer.courseName}</p>
-            <p><strong>Course ID:</strong> {selectedTrainer.courseId}</p>
-          </div>
-        )}
-      </Modal>
-    </div>
+    <List
+      grid={{ gutter: 16, column: 1 }}
+      dataSource={courses}
+      renderItem={(course) => (
+        <List.Item>
+          <Card
+            title={course.name}
+            extra={`Fees: ₹${course.fees}`}
+            style={{ borderRadius: 10 }}
+          >
+            <p><strong>Place:</strong> {course.place}</p>
+            <p><strong>Mode:</strong> {course.mode}</p>
+            <p><strong>Trainer:</strong> {course.trainerId?.name}</p>
+            <p><strong>Contact:</strong> {course.contact}</p>
+            <p><strong>Experience:</strong> {course.experience}</p>
+            {course.proof && <p><strong>Proof:</strong> <a href={course.proof} target="_blank" rel="noreferrer">View</a></p>}
+          </Card>
+        </List.Item>
+      )}
+    />
   );
 };
 
