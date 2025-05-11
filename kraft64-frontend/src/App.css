@@ -372,7 +372,7 @@ footer .map {
   min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(to right, #fff 50%, #2a0565 50%);
-  animation: fadeIn 0.8s ease-in-out;
+  animation: fadeIn 0.9s ease-in-out;
 }
 
 @keyframes fadeIn {
