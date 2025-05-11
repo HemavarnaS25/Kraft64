@@ -92,7 +92,6 @@ const TrainerDashboard = () => {
         setIsCourseModalOpen(false);
         courseForm.resetFields();
 
-        // Use the returned course with Mongo _id
         setCourses((prevCourses) => [...prevCourses, data]);
       } else {
         message.error(data.msg || 'Failed to add course');
@@ -161,6 +160,7 @@ const TrainerDashboard = () => {
               <List
                 itemLayout="horizontal"
                 dataSource={courses}
+                rowKey={(item) => item._id}
                 renderItem={(item) => (
                   <List.Item>
                     <List.Item.Meta
@@ -215,6 +215,7 @@ const TrainerDashboard = () => {
               <List
                 itemLayout="horizontal"
                 dataSource={students}
+                rowKey={(item) => item._id || item.email}
                 renderItem={(item) => (
                   <List.Item>
                     <List.Item.Meta
