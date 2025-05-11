@@ -10,6 +10,13 @@ const courseSchema = new mongoose.Schema(
     fees: { type: Number, required: true },
     mode: { type: String, enum: ['Online', 'Offline', 'Hybrid'], required: true },
     trainerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    students: [
+      {
+        name: { type: String, required: true },
+        email: { type: String, required: true },
+        dateJoined: { type: Date, default: Date.now }
+      }
+    ]
   },
   { timestamps: true }
 );
