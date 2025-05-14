@@ -22,6 +22,7 @@ router.post('/add', async (req, res) => {
       fees,
       mode,
       trainerId,
+      trainerName: trainer.name 
     });
 
     const saved = await newCourse.save();

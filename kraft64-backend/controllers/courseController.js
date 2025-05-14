@@ -13,6 +13,7 @@ export const addCourse = async (req, res) => {
       fees,
       mode,
       trainerId,
+      trainerName: trainer.name 
     });
 
     const savedCourse = await newCourse.save();

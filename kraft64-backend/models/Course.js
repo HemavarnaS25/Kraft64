@@ -1,5 +1,3 @@
-import mongoose from 'mongoose';
-
 const courseSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -10,6 +8,7 @@ const courseSchema = new mongoose.Schema(
     fees: { type: Number, required: true },
     mode: { type: String, enum: ['Online', 'Offline', 'Hybrid'], required: true },
     trainerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    trainerName: { type: String, required: true }, // ✅ NEW FIELD
     students: [
       {
         name: { type: String, required: true },
@@ -20,6 +19,3 @@ const courseSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-const Course = mongoose.model('Course', courseSchema);
-export default Course;
