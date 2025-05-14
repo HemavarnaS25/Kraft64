@@ -78,7 +78,6 @@ const TrainerDashboard = () => {
   };
 
   const handleAddCourse = async (values) => {
-    console.log('Form submitted:', values);
     try {
       const res = await fetch('https://kraft64.onrender.com/api/courses/add', {
         method: 'POST',

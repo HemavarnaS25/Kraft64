@@ -1,35 +1,41 @@
-// controllers/courseController.js
+// backend/controllers/courseController.js
 
-export const addCourse = async (req, res) => {
+const Trainer = require('../models/Trainer'); // Your Mongoose model
+
+// GET all trainers
+const getAllTrainers = async (req, res) => {
   try {
-    const { name, place, experience, proof, contact, fees, mode, trainerId } = req.body;
-
-    const newCourse = new Course({
-      name,
-      place,
-      experience,
-      proof,
-      contact,
-      fees,
-      mode,
-      trainerId,
-    });
-
-    const savedCourse = await newCourse.save();
-    res.status(201).json(savedCourse);
-  } catch (err) {
-    console.error('Add course error:', err);
-    res.status(500).json({ msg: 'Server error while adding course' });
+    const trainers = await Trainer.find();
+    res.status(200).json(trainers);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch trainers', error });
   }
 };
 
-export const getCoursesByTrainer = async (req, res) => {
+// POST create a new trainer
+const createTrainer = async (req, res) => {
   try {
-    const { trainerId } = req.params;
-    const courses = await Course.find({ trainerId });
-    res.json(courses);
-  } catch (err) {
-    console.error('Get courses error:', err);
-    res.status(500).json({ msg: 'Server error fetching courses' });
+    const { name, place, mode, contact, email, experience, courseName, courseId, category } = req.body;
+    const newTrainer = new Trainer({
+      name,
+      place,
+      mode,
+      contact,
+      email,
+      experience,
+      courseName,
+      courseId,
+      category,
+    });
+
+    await newTrainer.save();
+    res.status(201).json({ message: 'Trainer added successfully', trainer: newTrainer });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to add trainer', error });
   }
+};
+
+module.exports = {
+  getAllTrainers,
+  createTrainer,
 };
