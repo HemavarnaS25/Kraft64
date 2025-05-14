@@ -1,26 +1,37 @@
-import mongoose from 'mongoose';
+import Course from '../models/Course.js';
 
-const courseSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    place: { type: String, required: true },
-    experience: { type: String, required: true },
-    proof: { type: String },
-    contact: { type: String, required: true },
-    fees: { type: Number, required: true },
-    mode: { type: String, enum: ['Online', 'Offline', 'Hybrid'], required: true },
-    trainerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trainer', required: true },  // Reference to the Trainer model
-    trainerName: { type: String, required: true },  // Store Trainer's name directly in the course
-    students: [
-      {
-        name: { type: String, required: true },
-        email: { type: String, required: true },
-        dateJoined: { type: Date, default: Date.now }
-      }
-    ]
-  },
-  { timestamps: true }
-);
+export const createCourse = async (req, res) => {
+  try {
+    const {
+      name,
+      place,
+      experience,
+      proof,
+      contact,
+      fees,
+      mode,
+      trainerId,
+      trainerName,
+      students
+    } = req.body;
 
-const Course = mongoose.model('Course', courseSchema);
-export default Course;
+    const newCourse = new Course({
+      name,
+      place,
+      experience,
+      proof,
+      contact,
+      fees,
+      mode,
+      trainerId,
+      trainerName,
+      students
+    });
+
+    await newCourse.save();
+    res.status(201).json({ message: 'Course added successfully', course: newCourse });
+  } catch (error) {
+    console.error(error);  // See what the error is
+    res.status(500).json({ message: 'Failed to add course', error });
+  }
+};
