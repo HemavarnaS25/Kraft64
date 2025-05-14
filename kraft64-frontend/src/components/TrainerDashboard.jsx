@@ -156,6 +156,7 @@ const TrainerDashboard = () => {
               bordered={false}
               extra={<Button icon={<PlusOutlined />} onClick={() => setIsCourseModalOpen(true)}>Add Course</Button>}
             >
+               <p><strong>Trainer:</strong> {user.name}</p>
               <List
                 itemLayout="horizontal"
                 dataSource={courses}

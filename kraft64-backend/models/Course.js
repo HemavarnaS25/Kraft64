@@ -9,7 +9,8 @@ const courseSchema = new mongoose.Schema(
     contact: { type: String, required: true },
     fees: { type: Number, required: true },
     mode: { type: String, enum: ['Online', 'Offline', 'Hybrid'], required: true },
-    trainerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    trainerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trainer', required: true },  // Reference to the Trainer model
+    trainerName: { type: String, required: true },  // Store Trainer's name directly in the course
     students: [
       {
         name: { type: String, required: true },
