@@ -1,52 +1,35 @@
-// backend/controllers/courseController.js
+// controllers/courseController.js
 
-const Trainer = require('../models/Trainer'); // Your Mongoose model
-
-// GET all trainers
-const getAllTrainers = async (req, res) => {
+export const addCourse = async (req, res) => {
   try {
-    const trainers = await Trainer.find();
-    res.status(200).json(trainers);
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to fetch trainers', error });
-  }
-};
+    const { name, place, experience, proof, contact, fees, mode, trainerId } = req.body;
 
-// POST create a new trainer
-const createTrainer = async (req, res) => {
-  try {
-    const { name, place, mode, contact, email, experience, courseName, courseId, category } = req.body;
-
-    // Ensure that required fields are provided
-    if (!name || !place || !mode || !contact || !email || !experience || !courseName || !courseId) {
-      return res.status(400).json({ message: 'Missing required fields' });
-    }
-
-    // Create a new trainer document
-    const newTrainer = new Trainer({
+    const newCourse = new Course({
       name,
       place,
-      mode,
-      contact,
-      email,
       experience,
-      courseName,
-      courseId,
-      category,
+      proof,
+      contact,
+      fees,
+      mode,
+      trainerId,
     });
 
-    // Save the new trainer to the database
-    await newTrainer.save();
-
-    // Respond with success and the newly added trainer
-    res.status(201).json({ message: 'Trainer added successfully', trainer: newTrainer });
-  } catch (error) {
-    console.error('Error creating trainer:', error);
-    res.status(500).json({ message: 'Failed to add trainer', error });
+    const savedCourse = await newCourse.save();
+    res.status(201).json(savedCourse);
+  } catch (err) {
+    console.error('Add course error:', err);
+    res.status(500).json({ msg: 'Server error while adding course' });
   }
 };
 
-module.exports = {
-  getAllTrainers,
-  createTrainer,
+export const getCoursesByTrainer = async (req, res) => {
+  try {
+    const { trainerId } = req.params;
+    const courses = await Course.find({ trainerId });
+    res.json(courses);
+  } catch (err) {
+    console.error('Get courses error:', err);
+    res.status(500).json({ msg: 'Server error fetching courses' });
+  }
 };
