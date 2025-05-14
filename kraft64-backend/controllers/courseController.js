@@ -1,8 +1,14 @@
-// controllers/courseController.js
+import Course from '../models/Course.js';
+import User from '../models/User.js';
 
 export const addCourse = async (req, res) => {
   try {
     const { name, place, experience, proof, contact, fees, mode, trainerId } = req.body;
+
+    const trainer = await User.findById(trainerId);
+    if (!trainer) {
+      return res.status(404).json({ msg: 'Trainer not found' });
+    }
 
     const newCourse = new Course({
       name,
@@ -13,7 +19,7 @@ export const addCourse = async (req, res) => {
       fees,
       mode,
       trainerId,
-      trainerName: trainer.name 
+      trainerName: trainer.name // ✅ Save trainer name
     });
 
     const savedCourse = await newCourse.save();
