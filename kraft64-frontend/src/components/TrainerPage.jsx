@@ -73,7 +73,7 @@ const TrainerPage = () => {
             >
               <p><strong>📍 Place:</strong> {course.place}</p>
               <p><strong>🎓 Mode:</strong> {course.mode}</p>
-              <p><strong>👤 Trainer:</strong> {course.trainerId?.name}</p>
+              <p><strong>👤 Trainer:</strong> {course.trainerId?.fullName}</p>
               <p><strong>📞 Contact:</strong> {course.contact}</p>
               <p><strong>🧠 Experience:</strong> {course.experience}</p>
               {course.proof && (
