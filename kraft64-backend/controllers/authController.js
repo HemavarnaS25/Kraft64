@@ -1,6 +1,5 @@
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 
 // Signup logic with role handling
 export const signup = async (req, res) => {
@@ -18,8 +17,9 @@ export const signup = async (req, res) => {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Set default role as 'student' if not provided
-    const assignedRole = role && ['student', 'trainer'].includes(role.toLowerCase()) ? role.toLowerCase() : 'student';
+    // Validate role (only 'student' or 'trainer' allowed)
+    const validRoles = ['student', 'trainer'];
+    const assignedRole = validRoles.includes(role?.toLowerCase()) ? role.toLowerCase() : 'student';
 
     // Create new user
     const newUser = new User({
@@ -33,10 +33,7 @@ export const signup = async (req, res) => {
     // Save new user to DB
     await newUser.save();
 
-    // Generate token
-    const token = jwt.sign({ id: newUser._id, role: newUser.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
-
-    // Respond with user details and token
+    // Respond with user details (excluding password)
     res.status(201).json({
       msg: "User created successfully",
       user: {
@@ -45,16 +42,15 @@ export const signup = async (req, res) => {
         fullName: newUser.fullName,
         email: newUser.email,
         role: newUser.role,
-      },
-      token,
+      }
     });
   } catch (err) {
     console.error('Signup error:', err);
-    res.status(500).json({ msg: 'Server error while creating account' });
+    res.status(500).json({ msg: 'Server error while creating account', error: err.message });
   }
 };
 
-// Login logic with JWT token support
+// Login logic without JWT
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -67,10 +63,7 @@ export const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
-    // Generate token
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
-
-    // Respond with user details and token
+    // Respond with user details (excluding password)
     res.status(200).json({
       msg: "Login successful",
       user: {
@@ -80,11 +73,10 @@ export const login = async (req, res) => {
         email: user.email,
         role: user.role,
         bio: user.bio || '',
-      },
-      token,
+      }
     });
   } catch (err) {
     console.error('Login error:', err);
-    res.status(500).json({ msg: 'Server error while logging in' });
+    res.status(500).json({ msg: 'Server error while logging in', error: err.message });
   }
 };

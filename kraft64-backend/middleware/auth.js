@@ -1,39 +1,31 @@
-import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 export const protect = async (req, res, next) => {
-  let token;
+  const { userId } = req.body; // Assuming user ID is passed in request body
 
-  // Check if token is provided in headers
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    try {
-      // Extract token from header
-      token = req.headers.authorization.split(' ')[1];
+  if (!userId) {
+    return res.status(401).json({ msg: 'Not authorized, user ID required' });
+  }
 
-      // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  try {
+    // Fetch user details by ID
+    const user = await User.findById(userId).select('fullName role email');
 
-      // Fetch user details, including trainer information
-      const user = await User.findById(decoded.id).select('fullName role email');
-
-      if (!user) {
-        return res.status(401).json({ msg: 'User not found' });
-      }
-
-      // If user is a trainer, attach trainer info
-      req.user = {
-        id: user._id,
-        fullName: user.fullName,
-        email: user.email,
-        role: user.role
-      };
-
-      next(); // Proceed to next middleware or route handler
-    } catch (err) {
-      console.error('Token verification error:', err);
-      res.status(401).json({ msg: 'Not authorized, token failed' });
+    if (!user) {
+      return res.status(401).json({ msg: 'User not found' });
     }
-  } else {
-    res.status(401).json({ msg: 'Not authorized, no token provided' });
+
+    // Attach user details to request object
+    req.user = {
+      id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      role: user.role
+    };
+
+    next(); // Proceed to the next middleware or route handler
+  } catch (err) {
+    console.error('User authentication error:', err);
+    res.status(500).json({ msg: 'Server error while authenticating user' });
   }
 };
