@@ -26,7 +26,7 @@ export const addCourse = async (req, res) => {
 export const getCoursesByTrainer = async (req, res) => {
   try {
     const { trainerId } = req.params;
-    const courses = await Course.find({ trainerId }).populate('trainerId', 'name'); 
+    const courses = await Course.find({ trainerId }).populate('trainerId', 'fullName'); 
     res.json(courses);
   } catch (err) {
     console.error('Get courses error:', err);

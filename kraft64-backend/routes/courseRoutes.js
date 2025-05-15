@@ -31,7 +31,7 @@ router.post('/add', async (req, res) => {
 router.get('/trainer/:trainerId', async (req, res) => {
   try {
     const courses = await Course.find({ trainerId: req.params.trainerId })
-      .populate('trainerId', 'name')
+      .populate('trainerId', 'fullName')
       .sort({ createdAt: -1 });
     res.json(courses);
   } catch (error) {
@@ -41,7 +41,7 @@ router.get('/trainer/:trainerId', async (req, res) => {
 });
 router.get('/all', async (req, res) => {
   try {
-    const courses = await Course.find().populate('trainerId', 'name email');
+    const courses = await Course.find().populate('trainerId', 'fullName email');
     res.json(courses);
   } catch (error) {
     console.error('Error in /all:', error);
@@ -71,7 +71,7 @@ router.post('/join/:courseId', async (req, res) => {
 router.get('/all', async (req, res) => {
   try {
     const courses = await Course.find()
-      .populate('trainerId', 'name')  
+      .populate('trainerId', 'fullName')  
       .sort({ createdAt: -1 });
     res.json(courses);
   } catch (error) {
