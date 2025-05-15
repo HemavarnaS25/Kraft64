@@ -99,7 +99,7 @@ const TrainerDashboard = () => {
       <Sider breakpoint="lg" collapsedWidth="0" style={{ background: '#fff' }}>
         <div style={{ textAlign: 'center', margin: '16px 0' }}>
           <Avatar size={64} icon={<UserOutlined />} />
-          <div style={{ marginTop: 8 }}>{user.name}</div>
+          <div style={{ marginTop: 8 }}>{user.fullName || fullName}</div>
         </div>
         <Menu
           mode="inline"
