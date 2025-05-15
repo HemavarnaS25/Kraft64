@@ -11,9 +11,9 @@ const userSchema = new mongoose.Schema({
   xLink: { type: String, default: '' },
   role: {
     type: String,
-    enum: ['student', 'trainer'], // Only student and trainer allowed
+    enum: ['student', 'trainer'], 
     required: true,
-    lowercase: true, // Automatically convert input to lowercase
+    lowercase: true, 
     trim: true
   }
 }, { timestamps: true });

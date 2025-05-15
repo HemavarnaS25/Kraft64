@@ -1,14 +1,9 @@
 import express from 'express';
 import { signup, login } from '../controllers/authController.js';
 import User from '../models/User.js';
-
 const router = express.Router();
-
-// Signup and Login Routes
 router.post('/signup', signup);
 router.post('/login', login);
-
-// Update profile picture and social links
 router.put('/update-socials/:id', async (req, res) => {
   const { profilePic, linkedIn, xLink } = req.body;
 
@@ -27,15 +22,13 @@ router.put('/update-socials/:id', async (req, res) => {
     res.status(500).json({ msg: 'Failed to update socials.' });
   }
 });
-
-// Update name and bio
 router.put('/update-profile/:id', async (req, res) => {
   const { fullName, bio } = req.body;
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      { fullName, bio },  // Corrected to match field names
+      { fullName, bio }, 
       { new: true }
     );
 

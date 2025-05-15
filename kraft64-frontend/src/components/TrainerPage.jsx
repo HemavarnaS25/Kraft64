@@ -30,9 +30,9 @@ const TrainerPage = () => {
   };
 
   const handleAddStudent = async () => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (!storedUser || !storedUser.id) {
-      message.error('You must be logged in to enroll');
+    const { name, email } = studentDetails;
+    if (!name || !email) {
+      message.error('Please fill in all fields');
       return;
     }
 
@@ -40,13 +40,13 @@ const TrainerPage = () => {
       const res = await fetch(`https://kraft64.onrender.com/api/courses/join/${selectedCourse._id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ studentId: storedUser.id }), // ✅ Send studentId instead of just name/email
+        body: JSON.stringify({ name, email }),
       });
-
       const data = await res.json();
       if (res.ok) {
         message.success(data.msg);
         setIsModalVisible(false);
+        setStudentDetails({ name: '', email: '' });
       } else {
         message.error(data.msg || 'Failed to join course');
       }
@@ -63,14 +63,22 @@ const TrainerPage = () => {
         dataSource={courses}
         renderItem={(course) => (
           <List.Item>
-            <Card title={course.name} extra={`Fees: ₹${course.fees}`} style={{ borderRadius: 10 }}>
+            <Card
+              title={course.name}
+              extra={`Fees: ₹${course.fees}`}
+              style={{ borderRadius: 10 }}
+            >
               <p><strong>Place:</strong> {course.place}</p>
               <p><strong>Mode:</strong> {course.mode}</p>
-              <p><strong>Trainer:</strong> {course.trainerId?.fullName}</p> {/* ✅ Correct trainer name */}
+              <p><strong>Trainer:</strong> {course.trainerId?.name}</p>
               <p><strong>Contact:</strong> {course.contact}</p>
               <p><strong>Experience:</strong> {course.experience}</p>
               {course.proof && <p><strong>Proof:</strong> <a href={course.proof} target="_blank" rel="noreferrer">View</a></p>}
-              <Button type="primary" icon={<BookOutlined />} onClick={() => handleJoin(course)}>
+              <Button
+                type="primary"
+                icon={<BookOutlined />}
+                onClick={() => handleJoin(course)}
+              >
                 Join
               </Button>
             </Card>
@@ -81,19 +89,29 @@ const TrainerPage = () => {
       {/* Modal to enter student details */}
       <Modal
         title="Join Course"
-        open={isModalVisible}
+        visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={[
-          <Button key="cancel" onClick={() => setIsModalVisible(false)}>Cancel</Button>,
-          <Button key="submit" type="primary" onClick={handleAddStudent}>Add</Button>
+          <Button key="cancel" onClick={() => setIsModalVisible(false)}>
+            Cancel
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleAddStudent}>
+            Add
+          </Button>
         ]}
       >
         <Form layout="vertical">
           <Form.Item label="Name">
-            <Input value={studentDetails.name} disabled />
+            <Input
+              value={studentDetails.name}
+              onChange={(e) => setStudentDetails({ ...studentDetails, name: e.target.value })}
+            />
           </Form.Item>
           <Form.Item label="Email">
-            <Input value={studentDetails.email} disabled />
+            <Input
+              value={studentDetails.email}
+              onChange={(e) => setStudentDetails({ ...studentDetails, email: e.target.value })}
+            />
           </Form.Item>
         </Form>
       </Modal>

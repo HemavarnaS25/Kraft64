@@ -1,31 +1,35 @@
+import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 export const protect = async (req, res, next) => {
-  const { userId } = req.body; // Assuming user ID is passed in request body
+  let token;
 
-  if (!userId) {
-    return res.status(401).json({ msg: 'Not authorized, user ID required' });
+  // Check if token is provided in headers
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    try {
+      // Get token from header
+      token = req.headers.authorization.split(' ')[1];
+
+      // Verify token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      // Find user by ID and attach to request object
+      const user = await User.findById(decoded.id).select('-password');
+      
+      if (!user) {
+        return res.status(401).json({ msg: 'User not found' });
+      }
+
+      // Attach user to request object
+      req.user = user;
+      next(); // Proceed to the next middleware or route handler
+    } catch (err) {
+      console.error(err);
+      res.status(401).json({ msg: 'Not authorized, token failed' });
+    }
   }
 
-  try {
-    // Fetch user details by ID
-    const user = await User.findById(userId).select('fullName role email');
-
-    if (!user) {
-      return res.status(401).json({ msg: 'User not found' });
-    }
-
-    // Attach user details to request object
-    req.user = {
-      id: user._id,
-      fullName: user.fullName,
-      email: user.email,
-      role: user.role
-    };
-
-    next(); // Proceed to the next middleware or route handler
-  } catch (err) {
-    console.error('User authentication error:', err);
-    res.status(500).json({ msg: 'Server error while authenticating user' });
+  if (!token) {
+    res.status(401).json({ msg: 'Not authorized, no token' });
   }
 };
