@@ -15,7 +15,6 @@ const TrainerDashboard = () => {
   const [bio, setBio] = useState('');
   const [fullName, setFullName] = useState('');
   const [courses, setCourses] = useState([]);
-  const [students, setStudents] = useState([]);
   const [isCourseModalOpen, setIsCourseModalOpen] = useState(false);
   const [courseForm] = Form.useForm();
 
@@ -26,7 +25,6 @@ const TrainerDashboard = () => {
       setFullName(storedUser.name || '');
       setBio(storedUser.bio || '');
       fetchCourses(storedUser.id);
-      fetchStudents(storedUser.id);
     }
   }, []);
 
@@ -37,16 +35,6 @@ const TrainerDashboard = () => {
       if (res.ok) setCourses(data);
     } catch (error) {
       console.error('Error fetching courses:', error);
-    }
-  };
-
-  const fetchStudents = async (trainerId) => {
-    try {
-      const res = await fetch(`https://kraft64.onrender.com/api/students/trainer/${trainerId}`);
-      const data = await res.json();
-      if (res.ok) setStudents(data);
-    } catch (err) {
-      console.error("Error fetching students:", err);
     }
   };
 
@@ -78,30 +66,28 @@ const TrainerDashboard = () => {
   };
 
   const handleAddCourse = async (values) => {
-  try {
-    const res = await fetch('https://kraft64.onrender.com/api/courses/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...values, trainerId: user.id }),
-    });
+    try {
+      const res = await fetch('https://kraft64.onrender.com/api/courses/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...values, trainerId: user.id }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (res.ok) {
-      message.success('Course added successfully!');
-      setIsCourseModalOpen(false);
-      courseForm.resetFields();
-      setCourses((prevCourses) => [...prevCourses, data]);
-      fetchStudents(user.id);
-    } else {
-      message.error(data.msg || 'Failed to add course');
+      if (res.ok) {
+        message.success('Course added successfully!');
+        setIsCourseModalOpen(false);
+        courseForm.resetFields();
+        setCourses((prevCourses) => [...prevCourses, data]);
+      } else {
+        message.error(data.msg || 'Failed to add course');
+      }
+    } catch (error) {
+      console.error('Error adding course:', error);
+      message.error('Error adding course');
     }
-  } catch (error) {
-    console.error('Error adding course:', error);
-    message.error('Error adding course');
-  }
-};
-
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -221,19 +207,29 @@ const TrainerDashboard = () => {
 
           {selectedSection === 'Students' && (
             <Card title="My Students" bordered={false}>
-              <List
-                itemLayout="horizontal"
-                dataSource={students}
-                renderItem={(item) => (
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={<Avatar icon={<UserOutlined />} />}
-                      title={item.name}
-                      description={item.email}
+              {courses.length === 0 ? (
+                <div>No courses found.</div>
+              ) : (
+                courses.map((course) => (
+                  <div key={course._id} style={{ marginBottom: 24 }}>
+                    <h3 style={{ marginBottom: 8 }}>{course.name}</h3>
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={course.students}
+                      locale={{ emptyText: 'No students yet' }}
+                      renderItem={(student) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={<Avatar icon={<UserOutlined />} />}
+                            title={student.name}
+                            description={student.email}
+                          />
+                        </List.Item>
+                      )}
                     />
-                  </List.Item>
-                )}
-              />
+                  </div>
+                ))
+              )}
             </Card>
           )}
         </Content>

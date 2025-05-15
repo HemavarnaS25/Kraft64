@@ -68,18 +68,4 @@ router.post('/join/:courseId', async (req, res) => {
   }
 });
 
-router.get('/all', async (req, res) => {
-  try {
-    const courses = await Course.find()
-      .populate('trainerId', 'fullName')  
-      .sort({ createdAt: -1 });
-    res.json(courses);
-  } catch (error) {
-    console.error('Error fetching courses:', error);
-    res.status(500).json({ msg: 'Server error while fetching courses.' });
-  }
-});
-
-
-
 export default router;
