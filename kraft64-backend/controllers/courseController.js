@@ -1,49 +1,21 @@
 import Course from '../models/Course.js';
 import User from '../models/User.js';
 
-// Add a new course with trainer details
-export const addCourse = async (req, res) => {
+// Get all courses with trainer & students populated
+export const getAllCourses = async (req, res) => {
   try {
-    const { name, place, experience, proof, contact, fees, mode, trainerId } = req.body;
+    const courses = await Course.find()
+      .populate('trainerId', 'fullName email') // ✅ Fetch trainer details
+      .populate('students.studentId', 'fullName email'); // ✅ Fetch enrolled student details
 
-    const trainer = await User.findById(trainerId);
-    if (!trainer) {
-      return res.status(404).json({ msg: 'Trainer not found' });
-    }
-
-    const newCourse = new Course({
-      name,
-      place,
-      experience,
-      proof,
-      contact,
-      fees,
-      mode,
-      trainerId,
-      trainerName: trainer.fullName, // ✅ Store trainer's name correctly
-    });
-
-    const savedCourse = await newCourse.save();
-    res.status(201).json(savedCourse);
-  } catch (err) {
-    console.error('Error adding course:', err);
-    res.status(500).json({ msg: 'Server error while adding course' });
-  }
-};
-
-// Get courses by trainer
-export const getCoursesByTrainer = async (req, res) => {
-  try {
-    const { trainerId } = req.params;
-    const courses = await Course.find({ trainerId }).populate('students.studentId', 'fullName email');
     res.json(courses);
-  } catch (err) {
-    console.error('Error fetching courses:', err);
-    res.status(500).json({ msg: 'Server error fetching courses' });
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    res.status(500).json({ msg: 'Server error while fetching courses.' });
   }
 };
 
-// Enroll student in a course
+// Enroll student in a course using studentId
 export const enrollStudent = async (req, res) => {
   try {
     const { studentId } = req.body;
@@ -53,13 +25,13 @@ export const enrollStudent = async (req, res) => {
     if (!course) return res.status(404).json({ msg: 'Course not found' });
     if (!student) return res.status(404).json({ msg: 'Student not found' });
 
-    // Add student to course
+    // Add student reference
     course.students.push({ studentId, name: student.fullName, email: student.email });
     await course.save();
 
-    res.status(200).json({ msg: 'Successfully enrolled', student: student.fullName, course: course.name });
-  } catch (err) {
-    console.error('Enrollment error:', err);
-    res.status(500).json({ msg: 'Server error while enrolling student' });
+    res.status(200).json({ msg: 'Successfully enrolled in course!', student: student.fullName });
+  } catch (error) {
+    console.error('Enrollment error:', error);
+    res.status(500).json({ msg: 'Server error while enrolling student.' });
   }
 };

@@ -18,7 +18,7 @@ const { Sider, Content } = Layout;
 const { TabPane } = Tabs;
 
 const Dashboard = () => {
-  const [user, setUser] = useState({ name: '', email: '', id: '', bio: '', profilePic: '' });
+  const [user, setUser] = useState({ fullName: '', email: '', id: '', bio: '', profilePic: '' });
   const [selectedSection, setSelectedSection] = useState('Profile');
   const [bio, setBio] = useState('');
   const [fullName, setFullName] = useState('');
@@ -28,7 +28,7 @@ const Dashboard = () => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
       setUser(storedUser);
-      setFullName(storedUser.name || '');
+      setFullName(storedUser.fullName || '');
       setBio(storedUser.bio || '');
     }
   }, []);
@@ -44,11 +44,7 @@ const Dashboard = () => {
       const data = await response.json();
       if (response.ok) {
         message.success('Profile updated successfully!');
-        const updatedUser = {
-          ...user,
-          name: data.user.fullName,
-          bio: data.user.bio,
-        };
+        const updatedUser = { ...user, fullName: data.user.fullName, bio: data.user.bio };
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setUser(updatedUser);
       } else {
@@ -69,8 +65,8 @@ const Dashboard = () => {
     <Layout style={{ minHeight: '100vh' }}>
       <Sider breakpoint="lg" collapsedWidth="0" style={{ background: '#fff' }}>
         <div className="logo" style={{ textAlign: 'center', margin: '16px 0' }}>
-          <Avatar size={64} icon={<UserOutlined />} />
-          <div style={{ marginTop: 8 }}>{user.name}</div>
+          <Avatar size={64} src={user.profilePic} icon={!user.profilePic && <UserOutlined />} />
+          <div style={{ marginTop: 8 }}>{user.fullName}</div>
         </div>
         <Menu
           mode="inline"
@@ -93,9 +89,6 @@ const Dashboard = () => {
           {selectedSection === 'EditProfile' && (
             <Card title="Edit Profile" bordered={false} style={{ maxWidth: 800, margin: 'auto' }}>
               <Form layout="vertical" onFinish={handleSaveChanges}>
-                <Form.Item label="Username">
-                  <Input value={user.name} disabled />
-                </Form.Item>
                 <Form.Item label="Full Name">
                   <Input value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 </Form.Item>
@@ -109,20 +102,14 @@ const Dashboard = () => {
                   <Button type="primary" htmlType="submit" block>Save Changes</Button>
                 </Form.Item>
               </Form>
-              <Button type="link" onClick={() => setIsChangePasswordModalOpen(true)}>
-                Change Password
-              </Button>
+              <Button type="link" onClick={() => setIsChangePasswordModalOpen(true)}>Change Password</Button>
             </Card>
           )}
 
           {selectedSection === 'Explore' && (
             <Tabs defaultActiveKey="1">
-              <TabPane tab="Aayar Kalai" key="1">
-                <ExploreAayarKalai />
-              </TabPane>
-              <TabPane tab="Tamil Traditional Things" key="2">
-                <ExploreTamilTraditionalThings />
-              </TabPane>
+              <TabPane tab="Aayar Kalai" key="1"><ExploreAayarKalai /></TabPane>
+              <TabPane tab="Tamil Traditional Things" key="2"><ExploreTamilTraditionalThings /></TabPane>
             </Tabs>
           )}
 
