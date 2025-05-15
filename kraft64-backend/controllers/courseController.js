@@ -1,5 +1,3 @@
-
-
 import Course from '../models/Course.js';
 import User from '../models/User.js';
 
@@ -7,12 +5,6 @@ export const addCourse = async (req, res) => {
   try {
     const { name, place, experience, proof, contact, fees, mode, trainerId } = req.body;
 
-    const students = await User.find({ role: 'student', trainerId });
-
-    const studentData = students.map(student => ({
-      name: student.fullName,
-      email: student.email,
-    }));
     const newCourse = new Course({
       name,
       place,
@@ -22,7 +14,7 @@ export const addCourse = async (req, res) => {
       fees,
       mode,
       trainerId,
-      students: studentData
+      students: [] // Start with no students
     });
 
     const savedCourse = await newCourse.save();
