@@ -30,7 +30,9 @@ router.post('/add', async (req, res) => {
 });
 router.get('/trainer/:trainerId', async (req, res) => {
   try {
-    const courses = await Course.find({ trainerId: req.params.trainerId }).sort({ createdAt: -1 });
+    const courses = await Course.find({ trainerId: req.params.trainerId })
+      .populate('trainerId', 'name')
+      .sort({ createdAt: -1 });
     res.json(courses);
   } catch (error) {
     console.error('Error in /trainer/:trainerId:', error);
