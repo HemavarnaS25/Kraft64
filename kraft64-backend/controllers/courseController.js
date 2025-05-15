@@ -35,3 +35,36 @@ export const enrollStudent = async (req, res) => {
     res.status(500).json({ msg: 'Server error while enrolling student.' });
   }
 };
+
+// Add a new course with trainer details
+export const addCourse = async (req, res) => {
+  try {
+    const { name, place, experience, proof, contact, fees, mode, trainerId } = req.body;
+
+    const trainer = await User.findById(trainerId);
+    if (!trainer) {
+      return res.status(404).json({ msg: 'Trainer not found' });
+    }
+
+    const newCourse = new Course({
+      name,
+      place,
+      experience,
+      proof,
+      contact,
+      fees,
+      mode,
+      trainerId,
+      trainerName: trainer.fullName, // ✅ Store trainer’s name correctly
+    });
+
+    const savedCourse = await newCourse.save();
+    res.status(201).json(savedCourse);
+  } catch (err) {
+    console.error('Add course error:', err);
+    res.status(500).json({ msg: 'Server error while adding course' });
+  }
+};
+
+// Export functions correctly
+export { addCourse, getAllCourses, enrollStudent };
