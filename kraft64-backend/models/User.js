@@ -1,3 +1,4 @@
+// models/User.js
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
@@ -11,11 +12,18 @@ const userSchema = new mongoose.Schema({
   xLink: { type: String, default: '' },
   role: {
     type: String,
-    enum: ['student', 'trainer'], 
+    enum: ['student', 'trainer'],
     required: true,
-    lowercase: true, 
-    trim: true
-  }
+    lowercase: true,
+    trim: true,
+  },
+  trainerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', 
+    required: function () {
+      return this.role === 'student';
+    },
+  },
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

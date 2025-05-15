@@ -78,29 +78,30 @@ const TrainerDashboard = () => {
   };
 
   const handleAddCourse = async (values) => {
-    console.log('Form submitted:', values);
-    try {
-      const res = await fetch('https://kraft64.onrender.com/api/courses/add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...values, trainerId: user.id }),
-      });
+  try {
+    const res = await fetch('https://kraft64.onrender.com/api/courses/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...values, trainerId: user.id }),
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (res.ok) {
-        message.success('Course added successfully!');
-        setIsCourseModalOpen(false);
-        courseForm.resetFields();
-        setCourses((prevCourses) => [...prevCourses, data]);
-      } else {
-        message.error(data.msg || 'Failed to add course');
-      }
-    } catch (error) {
-      console.error('Error adding course:', error);
-      message.error('Error adding course');
+    if (res.ok) {
+      message.success('Course added successfully!');
+      setIsCourseModalOpen(false);
+      courseForm.resetFields();
+      setCourses((prevCourses) => [...prevCourses, data]);
+      fetchStudents(user.id);
+    } else {
+      message.error(data.msg || 'Failed to add course');
     }
-  };
+  } catch (error) {
+    console.error('Error adding course:', error);
+    message.error('Error adding course');
+  }
+};
+
 
   const handleLogout = () => {
     localStorage.removeItem('user');
