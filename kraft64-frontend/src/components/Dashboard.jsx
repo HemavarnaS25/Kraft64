@@ -13,8 +13,6 @@ import ExploreAayarKalai from './Explore/ExploreAayarKalai';
 import ExploreTamilTraditionalThings from './Explore/ExploreTamilTraditionalThings';
 import TrainerPage from './TrainerPage';
 import Profile from './Profile';
-import ActivityFeed from './ActivityFeed';
-
 
 const { Sider, Content } = Layout;
 const { TabPane } = Tabs;
@@ -66,25 +64,13 @@ const Dashboard = () => {
     localStorage.removeItem('user');
     window.location.href = '/';
   };
-  const logActivity = async (action) => {
-  await fetch('http://localhost:5000/api/activity', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      userId: user.id,
-      username: user.name,
-      action,
-    }),
-  });
-};
-
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider breakpoint="lg" collapsedWidth="0" style={{ background: '#fff' }}>
         <div className="logo" style={{ textAlign: 'center', margin: '16px 0' }}>
           <Avatar size={64} icon={<UserOutlined />} />
-          <div style={{ marginTop: 8 }}>{user.fullName || fullName}</div>
+          <div style={{ marginTop: 8 }}>{user.name}</div>
         </div>
         <Menu
           mode="inline"
@@ -94,8 +80,7 @@ const Dashboard = () => {
         >
           <Menu.Item key="Profile" icon={<ProfileOutlined />}>Profile</Menu.Item>
           <Menu.Item key="EditProfile" icon={<EditOutlined />}>Edit Profile</Menu.Item>
-          <Menu.Item key="
-          " icon={<AppstoreOutlined />}>Explore</Menu.Item>
+          <Menu.Item key="Explore" icon={<AppstoreOutlined />}>Explore</Menu.Item>
           <Menu.Item key="Train" icon={<TeamOutlined />}>Train</Menu.Item>
           <Menu.Item key="Logout" icon={<LogoutOutlined />} onClick={handleLogout}>Logout</Menu.Item>
         </Menu>
@@ -130,20 +115,16 @@ const Dashboard = () => {
             </Card>
           )}
 
-        {selectedSection === 'Explore' && (
-  <>
-    {logActivity('explored Aayar Kalai')}
-    <Tabs defaultActiveKey="1">
-      <TabPane tab="Aayar Kalai" key="1">
-        <ExploreAayarKalai />
-      </TabPane>
-      <TabPane tab="Tamil Traditional Things" key="2">
-        <ExploreTamilTraditionalThings />
-      </TabPane>
-    </Tabs>
-  </>
-)}
-
+          {selectedSection === 'Explore' && (
+            <Tabs defaultActiveKey="1">
+              <TabPane tab="Aayar Kalai" key="1">
+                <ExploreAayarKalai />
+              </TabPane>
+              <TabPane tab="Tamil Traditional Things" key="2">
+                <ExploreTamilTraditionalThings />
+              </TabPane>
+            </Tabs>
+          )}
 
           {selectedSection === 'Train' && (
             <Card title="Trainers" bordered={false}>
