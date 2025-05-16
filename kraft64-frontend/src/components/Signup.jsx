@@ -84,8 +84,8 @@ const Signup = () => {
             style={{ padding: '10px', marginBottom: '15px' }}
           >
             <option value="">Select Role</option>
-            <option value="student">Learner</option>
-            <option value="trainer">Trainer</option>
+            <option value="Learner">Learner</option>
+            <option value="Trainer">Trainer</option>
           </select>
           <button type="submit">Create Account</button>
           <p className="redirect-text">

@@ -13,7 +13,7 @@ export const signup = async (req, res) => {
       fullName,
       email,
       password: hashedPassword,
-      role: role || 'Learner',  
+      role: role === 'Trainer' ? 'Trainer' : 'Learner', 
     });
     await newUser.save();
     res.status(201).json({

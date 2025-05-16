@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -25,7 +24,7 @@ const Login = () => {
       if (res.ok) {
         localStorage.setItem('user', JSON.stringify(data.user));
 
-        if (data.user.role === 'trainer') {
+        if (data.user.role === 'Trainer') {
           navigate('/trainer-dashboard');
         } else {
           navigate('/dashboard');
