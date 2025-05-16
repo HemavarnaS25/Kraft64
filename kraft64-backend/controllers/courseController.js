@@ -1,10 +1,8 @@
 import Course from '../models/Course.js';
 import User from '../models/User.js';
-
 export const addCourse = async (req, res) => {
   try {
     const { name, place, experience, proof, contact, fees, mode, trainerId } = req.body;
-
     const newCourse = new Course({
       name,
       place,
@@ -14,18 +12,15 @@ export const addCourse = async (req, res) => {
       fees,
       mode,
       trainerId,
-      students: [] // Start with no students
+      students: [] 
     });
-
     const savedCourse = await newCourse.save();
-
     res.status(201).json(savedCourse);
   } catch (err) {
     console.error('Add course error:', err);
     res.status(500).json({ msg: 'Server error while adding course' });
   }
 };
-
 export const getCoursesByTrainer = async (req, res) => {
   try {
     const { trainerId } = req.params;

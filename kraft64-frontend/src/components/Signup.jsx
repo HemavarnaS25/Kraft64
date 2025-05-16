@@ -8,7 +8,7 @@ const Signup = () => {
     fullName: '',
     email: '',
     password: '',
-    role: '', // Add role to form data
+    role: '', 
   });
 
   const navigate = useNavigate();

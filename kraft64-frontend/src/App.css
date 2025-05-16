@@ -1262,7 +1262,7 @@ footer .map {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 /*-----------------------Trainer Dashboard---------------------*/
-/* General Layout Styling */
+
 .ant-layout {
   background: #f0f2f5;
 }
@@ -1285,8 +1285,6 @@ footer .map {
   color: #1890ff !important;
   font-weight: 600;
 }
-
-/* Avatar and user name section */
 .ant-layout-sider > div:first-child {
   padding: 16px;
   background-color: #fafafa;
@@ -1301,20 +1299,14 @@ footer .map {
   font-size: 16px;
   font-weight: 500;
 }
-
-/* Content area */
 .ant-layout-content {
   padding: 24px;
   background-color: #f9f9f9;
 }
-
-/* Cards */
 .ant-card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   border-radius: 10px;
 }
-
-/* Form Styling */
 .ant-form-item-label label {
   font-weight: 500;
 }
@@ -1330,13 +1322,9 @@ footer .map {
   border-color: #1890ff;
   font-weight: 600;
 }
-
-/* Modal */
 .ant-modal-content {
   border-radius: 12px;
 }
-
-/* Course List */
 .ant-list-item {
   background-color: #fff;
   padding: 16px;
@@ -1348,8 +1336,6 @@ footer .map {
 .ant-list-item:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
-
-/* Student List */
 .ant-list-item-meta {
   align-items: center;
 }
@@ -1402,7 +1388,7 @@ footer .map {
   background-color: #40a9ff !important;
 }
 /*-------------Trainer.Css-----------*/
-/* Base layout */
+
 .layout {
   min-height: 100vh;
   background-color: #f0f2f5;
@@ -1434,8 +1420,6 @@ footer .map {
   background-color: #f5f5f5;
   color: #1890ff;
 }
-
-/* Avatar styling */
 .sider-avatar {
   text-align: center;
   margin: 20px 0;
@@ -1450,8 +1434,6 @@ footer .map {
   font-weight: 600;
   color: #222;
 }
-
-/* Content area */
 .site-layout-content {
   margin: 24px 16px;
   padding: 24px;
@@ -1459,8 +1441,6 @@ footer .map {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
-
-/* Card styling */
 .ant-card {
   border-radius: 12px !important;
 }
@@ -1470,8 +1450,6 @@ footer .map {
   font-weight: 600;
   color: #1f1f1f;
 }
-
-/* Buttons */
 .ant-btn-primary {
   background-color: #1890ff;
   border: none;
@@ -1487,8 +1465,6 @@ footer .map {
 .ant-btn {
   border-radius: 6px;
 }
-
-/* Inputs */
 .ant-input,
 .ant-input-number,
 .ant-select-selector,
@@ -1496,12 +1472,10 @@ footer .map {
   border-radius: 6px !important;
 }
 
-/* Modal form spacing */
 .ant-modal-body .ant-form-item {
   margin-bottom: 18px;
 }
 
-/* List item */
 .ant-list-item {
   padding: 12px 0;
   border-bottom: 1px solid #f0f0f0;
@@ -1515,13 +1489,9 @@ h3 {
   font-weight: 600;
   color: #333;
 }
-
-/* Empty state text */
 .ant-list-empty-text {
   color: #888;
 }
-
-/* Responsive tweaks */
 @media (max-width: 768px) {
   .site-layout-content {
     padding: 16px;

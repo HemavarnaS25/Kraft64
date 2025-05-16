@@ -71,11 +71,11 @@ const TrainerPage = () => {
               extra={<span className="fees">₹{course.fees}</span>}
               hoverable
             >
-              <p><strong>📍 Place:</strong> {course.place}</p>
-              <p><strong>🎓 Mode:</strong> {course.mode}</p>
-              <p><strong>👤 Trainer:</strong> {course.trainerId?.fullName}</p>
-              <p><strong>📞 Contact:</strong> {course.contact}</p>
-              <p><strong>🧠 Experience:</strong> {course.experience}</p>
+              <p><strong> Place:</strong> {course.place}</p>
+              <p><strong> Mode:</strong> {course.mode}</p>
+              <p><strong> Trainer:</strong> {course.trainerId?.fullName}</p>
+              <p><strong> Contact:</strong> {course.contact}</p>
+              <p><strong> Experience:</strong> {course.experience}</p>
               {course.proof && (
                 <p><strong>📄 Proof:</strong> <a href={course.proof} target="_blank" rel="noreferrer">View</a></p>
               )}

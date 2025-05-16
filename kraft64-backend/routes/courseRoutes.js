@@ -1,6 +1,5 @@
 import express from 'express';
 import Course from '../models/Course.js';
-
 const router = express.Router();
 router.post('/add', async (req, res) => {
   try {
@@ -9,7 +8,6 @@ router.post('/add', async (req, res) => {
     if (!name || !place || !experience || !contact || !fees || !mode || !trainerId) {
       return res.status(400).json({ msg: 'All required fields must be filled.' });
     }
-
     const newCourse = new Course({
       name,
       place,
@@ -20,7 +18,6 @@ router.post('/add', async (req, res) => {
       mode,
       trainerId,
     });
-
     const saved = await newCourse.save();
     res.status(201).json(saved);
   } catch (error) {
@@ -52,20 +49,15 @@ router.post('/join/:courseId', async (req, res) => {
   try {
     const { name, email } = req.body;
     const course = await Course.findById(req.params.courseId);
-
     if (!course) {
       return res.status(404).json({ msg: 'Course not found' });
     }
-
     course.students.push({ name, email });
-
     await course.save();
-
     res.status(200).json({ msg: 'Successfully joined the course!' });
   } catch (error) {
     console.error('Error in /join/:courseId:', error);
     res.status(500).json({ msg: 'Server error while joining the course.' });
   }
 });
-
 export default router;

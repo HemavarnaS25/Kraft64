@@ -8,12 +8,12 @@ import Footer from './components/Footer';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
-import TrainerDashboard from './components/TrainerDashboard';  // Create this component
+import TrainerDashboard from './components/TrainerDashboard';  
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const AppContent = () => {
   const location = useLocation();
-  const showNavbar = location.pathname === '/'; // Show only on home page
+  const showNavbar = location.pathname === '/'; 
 
   return (
     <>

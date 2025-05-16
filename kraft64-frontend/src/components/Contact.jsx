@@ -33,7 +33,6 @@ const Contact = () => {
       setStatus('error');
     }
   };
-
   return (
     <section id="contact" className="contact-section py-5">
       <Container>
@@ -71,7 +70,6 @@ const Contact = () => {
             />
           </Form.Group>
           <Button variant="primary" type="submit">Send Message</Button>
-
           {status === 'success' && <Alert variant="success" className="mt-3">Message Sent Successfully!</Alert>}
           {status === 'error' && <Alert variant="danger" className="mt-3">Something went wrong. Please try again!</Alert>}
         </Form>
